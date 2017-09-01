@@ -1,22 +1,21 @@
-export const ADD_COMMENT = 'ADD_COMMENT';
-export const REMOVE_COMMENT = 'REMOVE_COMMENT';
+import axios from 'axios';
 
-export function addComment({ title, author, category, msg }) {
-  return {
-    type: ADD_COMMENT,
-    title,
-    author,
-    category,
-    msg
+export const LOAD_POSTS = 'LOAD_POSTS';
+
+const ROOT_URL = 'http://localhost:5001/posts';
+const AUTH_HEADERS = { Authorization: 'whatever-you-want', Accept: 'application/json' };
+
+axios.defaults.headers.common['Authorization'] = AUTH_HEADERS;
+
+export function loadPosts() {
+  return dispatch => {
+    axios.get(`${ROOT_URL}/posts`).then(res => dispatch(loadPostsSuccess(res.data)));
   };
 }
 
-export function removeComment({ title, author, category, msg }) {
+function loadPostsSuccess(data) {
   return {
-    type: REMOVE_COMMENT,
-    title,
-    author,
-    category,
-    msg
+    type: LOAD_POSTS,
+    payload: data
   };
 }

@@ -6,9 +6,9 @@ export default class Header extends Component {
     return (
       <div className="header">
         <Link to="/">
-          <h1>Readable</h1>
+          <h1 className="header-text">Readable</h1>
         </Link>
-        <h3>
+        <h3 className="header-text">
           Udacity Project by Paula Kedouk |
           <a href="https://github.com/paulakedouk/react-readable-project"> GitHub repository</a>
         </h3>

@@ -74,3 +74,25 @@ a:link {
 .categories :not(:last-child) {
   margin-right: 80px;
 }
+
+/* PostList */
+
+.postlist-item {
+  width: 360px;
+  height: 260px;
+  background-color: white;
+  margin-top: 100px;
+}
+
+.postlist {
+  position: relative;
+  margin-left: auto;
+  margin-right: auto;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+.postlist :not(:last-child) {
+  margin-right: 80px;
+}

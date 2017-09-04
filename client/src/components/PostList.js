@@ -4,6 +4,27 @@ import Post from './Post';
 
 export default class PostList extends Component {
   render() {
-    return <div>PostList</div>;
+    return (
+      <div className="postlist">
+        <div className="postlist-item">
+          <Post />
+        </div>
+        <div className="postlist-item">
+          <Post />
+        </div>
+        <div className="postlist-item">
+          <Post />
+        </div>
+        <div className="postlist-item">
+          <Post />
+        </div>
+        <div className="postlist-item">
+          <Post />
+        </div>
+        <div className="postlist-item">
+          <Post />
+        </div>
+      </div>
+    );
   }
 }

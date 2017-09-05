@@ -108,3 +108,30 @@ span {
   font-size: 16px;
   font-weight: 100;
 }
+
+.post :last-child {
+  padding-bottom: 20px;
+}
+
+.post-bottom {
+  position: relative;
+}
+
+.btn-like {
+  float: left;
+  display: flex;
+  padding-top: 15px;
+}
+
+.btn-like :first-child {
+  padding-right: 10px;
+}
+
+.read-more {
+  float: right;
+}
+
+.read-more h2 {
+  margin-bottom: 0;
+  font-weight: bold;
+}

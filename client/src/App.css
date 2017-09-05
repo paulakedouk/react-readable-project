@@ -77,22 +77,34 @@ a:link {
 
 /* PostList */
 
-.postlist-item {
-  width: 360px;
-  height: 260px;
-  background-color: white;
+.postlist-container {
   margin-top: 100px;
 }
 
-.postlist {
-  position: relative;
-  margin-left: auto;
-  margin-right: auto;
-  width: 100%;
-  display: flex;
+.postlist-table {
+  display: grid;
+  grid-template-columns: 360px 360px 360px;
+  grid-gap: 80px;
+  color: #444;
   justify-content: center;
 }
 
-.postlist :not(:last-child) {
-  margin-right: 80px;
+.cel {
+  background-color: white;
+  color: #333848;
+}
+
+.post {
+  display: block;
+  padding: 27px;
+}
+
+.post h1 {
+  font-size: 20px;
+}
+
+.post h2,
+span {
+  font-size: 16px;
+  font-weight: 100;
 }

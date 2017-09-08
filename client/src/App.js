@@ -1,30 +1,25 @@
-import React, { Component } from 'react';
+import React from 'react';
 import './App.css';
 
-import { Route, Switch } from 'react-router-dom';
+import { Route, Switch, withRouter } from 'react-router-dom';
+import { connect } from 'react-redux';
 
-import Header from './components/Header';
-import Categories from './components/Categories';
-import PostDetails from './components/PostDetails';
+import MainPage from './components/MainPage';
 import PostList from './components/PostList';
+import Categories from './components/Categories';
 
-class App extends Component {
+class App extends React.Component {
   render() {
     return (
       <div className="App">
         <Switch>
-          <div>
-            <Route exact path="/" component={Header} className="header" />
-            <Categories />
-            <PostList />
-          </div>
-          <div className="main">
-            <Route exact path="/category/:post_id" component={PostDetails} />
-          </div>
+          <Route exact path="/" component={MainPage} />
+          <Route exact path="/posts" component={PostList} />
+          <Route exact path="/page/:category" component={Categories} />
         </Switch>
       </div>
     );
   }
 }
 
-export default App;
+export default withRouter(connect()(App));

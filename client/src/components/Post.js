@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
-import '../../node_modules/font-awesome/css/font-awesome.min.css';
+// import '../../node_modules/font-awesome/css/font-awesome.min.css';
 
-// import EditButtons from './EditButtons';
+import { Link } from 'react-router-dom';
 
 export default class Post extends Component {
   render() {
@@ -23,7 +23,9 @@ export default class Post extends Component {
             </div>
           </div>
           <div className="read-more">
-            <h2>Read More ></h2>
+            <Link to="/post">
+              <h2>Read More ></h2>
+            </Link>
           </div>
         </div>
       </div>

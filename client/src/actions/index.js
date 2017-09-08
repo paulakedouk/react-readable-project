@@ -1,21 +1,35 @@
-import axios from 'axios';
+let token = localStorage.token;
+if (!token)
+  token = localStorage.token = Math.random()
+    .toString(36)
+    .substr(-8);
 
+const API = `http://localhost:5001`;
+const auth = 'react-redux';
+
+export const LOAD_CATEGORIES = 'LOAD_CATEGORIES';
 export const LOAD_POSTS = 'LOAD_POSTS';
 
-const ROOT_URL = 'http://localhost:5001/posts';
-const AUTH_HEADERS = { Authorization: 'whatever-you-want', Accept: 'application/json' };
-
-axios.defaults.headers.common['Authorization'] = AUTH_HEADERS;
-
-export function loadPosts() {
+export function getCategories() {
   return dispatch => {
-    axios.get(`${ROOT_URL}/posts`).then(res => dispatch(loadPostsSuccess(res.data)));
+    fetch(`${API}/categories`, { headers: { Authorization: auth } })
+      .then(res => res.json())
+      .then(data => dispatch(loadCategories(data.categories)));
   };
 }
 
-function loadPostsSuccess(data) {
-  return {
-    type: LOAD_POSTS,
-    payload: data
+export const loadCategories = data => {
+  return { type: LOAD_CATEGORIES, data };
+};
+
+export function getPostList() {
+  return dispatch => {
+    fetch(`${API}/posts`, { headers: { Authorization: auth } })
+      .then(res => res.json())
+      .then(data => dispatch(loadPostList(data)));
   };
 }
+
+export const loadPostList = data => {
+  return { type: LOAD_POSTS, data };
+};

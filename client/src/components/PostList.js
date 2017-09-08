@@ -9,21 +9,6 @@ export default class PostList extends Component {
           <div className="cel">
             <Post />
           </div>
-          <div className="cel">
-            <Post />
-          </div>
-          <div className="cel">
-            <Post />
-          </div>
-          <div className="cel">
-            <Post />
-          </div>
-          <div className="cel">
-            <Post />
-          </div>
-          <div className="cel">
-            <Post />
-          </div>
         </div>
       </div>
     );

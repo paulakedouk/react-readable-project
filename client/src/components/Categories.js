@@ -1,19 +1,17 @@
 import React, { Component } from 'react';
+// import PropTypes from 'prop-types';
 
-export default class Categories extends Component {
+class Categories extends Component {
   render() {
+    // console.log(this.props.list);
     return (
       <div className="categories">
         <div className="categories-item">
-          <h1>Udacity</h1>
-        </div>
-        <div className="categories-item">
-          <h1>React</h1>
-        </div>
-        <div className="categories-item">
-          <h1>Redux</h1>
+          <h1>{this.props.list}</h1>
         </div>
       </div>
     );
   }
 }
+
+export default Categories;

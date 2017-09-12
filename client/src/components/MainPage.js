@@ -1,22 +1,25 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 
-import { getCategories, getPostList } from '../actions';
+import { postsAPI, categoriesAPI } from '../actions';
 
 import Categories from './Categories';
 import PostList from './PostList';
 
 class MainPage extends Component {
   componentDidMount() {
-    const { dispatch } = this.props;
-    dispatch(getCategories());
-    dispatch(getPostList());
+    if (this.props.match.params.category) {
+      this.props.getPosts(this.props.match.params.category);
+    } else {
+      this.props.getPosts();
+    }
   }
 
   render() {
-    //const { categories } = this.props;
-
+    console.log(this.props);
+    const { posts } = this.props;
     return (
       <div className="header">
         <Link to="/">
@@ -26,18 +29,37 @@ class MainPage extends Component {
           Udacity Project by Paula Kedouk |
           <a href="https://github.com/paulakedouk/react-readable-project"> GitHub repository</a>
         </h3>
-        <Categories />
-        <PostList />
+        {this.props.posts.map(post => <PostList key={post.id} post={post} />)}
       </div>
     );
   }
 }
 
-const mapStateToProps = state => {
-  return {
-    category: state.categories,
-    posts: state.posts
-  };
+MainPage.propTypes = {
+  posts: PropTypes.array,
+  getPosts: PropTypes.func,
+  match: PropTypes.object,
+  categories: PropTypes.array
 };
 
-export default connect(mapStateToProps)(MainPage);
+const mapStateToProps = ({ post, category }) => {
+  if (post.posts) {
+    let posts = Object.keys(post.posts)
+      .map(postId => post.posts[postId])
+      .filter(post => post);
+
+    return {
+      posts
+    };
+  } else {
+    return {
+      posts: [],
+      category: []
+    };
+  }
+};
+
+export default connect(mapStateToProps, {
+  getPosts: postsAPI,
+  getCategories: categoriesAPI
+})(MainPage);

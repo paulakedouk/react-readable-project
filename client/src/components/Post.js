@@ -2,24 +2,26 @@ import React, { Component } from 'react';
 // import '../../node_modules/font-awesome/css/font-awesome.min.css';
 
 import { Link } from 'react-router-dom';
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 
-export default class Post extends Component {
+// import { getCategories } from '../actions';
+
+class Post extends Component {
   render() {
+    const { post } = this.props;
     return (
       <div className="post">
-        <h1>The top 10 things to do in San Francisco 2017</h1>
-        <h2>Today by Paula in Redux</h2>
-        <span>
-          Nonononononononononononononon ononononon ononononononononononononononono nonononononononononononononon
-          onononononononononononononono nonononononononono…
-        </span>
+        <h1>{post.title}</h1>
+        <h2>
+          Today by {post.author} in {post.category}
+        </h2>
+        <span>{post.body}</span>
         <div className="post-bottom">
           <div className="btn-like">
             <div>
-              <i className="fa fa-thumbs-up" aria-hidden="true" />0
-            </div>
-            <div>
-              <i className="fa fa-thumbs-down" aria-hidden="true" />2
+              <i className="fa fa-thumbs-up" aria-hidden="true" />
+              {post.voteScore}
             </div>
           </div>
           <div className="read-more">
@@ -32,3 +34,5 @@ export default class Post extends Component {
     );
   }
 }
+
+export default Post;

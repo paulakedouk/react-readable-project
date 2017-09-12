@@ -1,30 +1,29 @@
-import { LOAD_CATEGORIES } from '../actions';
-import { LOAD_POSTS } from '../actions';
 import { combineReducers } from 'redux';
+import { LOAD_CATEGORIES, LOAD_POSTS } from '../actions';
 
-const initialState = {
-  categories: [],
-  posts: []
-};
-
-function category(state = initialState, action) {
+function category(state = {}, action) {
+  const { categories } = action;
   switch (action.type) {
     case LOAD_CATEGORIES:
       return {
         ...state,
-        categories: action.data
+        categories
       };
     default:
       return state;
   }
 }
 
-function posts(state = initialState, action) {
+function post(state = {}, action) {
+  const { posts, post } = action;
   switch (action.type) {
     case LOAD_POSTS:
       return {
         ...state,
-        posts: action.data
+        posts: posts.reduce((accu, curr) => {
+          accu[curr.id] = curr;
+          return accu;
+        }, {})
       };
     default:
       return state;
@@ -33,5 +32,5 @@ function posts(state = initialState, action) {
 
 export default combineReducers({
   category,
-  posts
+  post
 });

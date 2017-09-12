@@ -1,16 +1,23 @@
 import React, { Component } from 'react';
-import Post from './Post';
 
-export default class PostList extends Component {
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import Post from './Post';
+import { getPosts } from '../actions';
+
+class PostList extends Component {
   render() {
+    const { post } = this.props;
     return (
       <div className="postlist-container">
         <div className="postlist-table">
           <div className="cel">
-            <Post />
+            <Post key={post.id} post={post} />
           </div>
         </div>
       </div>
     );
   }
 }
+
+export default PostList;

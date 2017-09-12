@@ -4,11 +4,17 @@ import './App.css';
 import { Route, Switch, withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 
+import PropTypes from 'prop-types';
 import MainPage from './components/MainPage';
 import PostList from './components/PostList';
 import Categories from './components/Categories';
+import { categoriesAPI, postsAPI } from './actions';
 
 class App extends React.Component {
+  componentDidMount() {
+    this.props.getCategories();
+  }
+
   render() {
     return (
       <div className="App">
@@ -22,4 +28,14 @@ class App extends React.Component {
   }
 }
 
-export default withRouter(connect()(App));
+App.propTypes = {
+  categoriesAPI: PropTypes.func,
+  postsAPI: PropTypes.func
+};
+
+export default withRouter(
+  connect(null, {
+    getCategories: categoriesAPI,
+    getPosts: postsAPI
+  })(App)
+);

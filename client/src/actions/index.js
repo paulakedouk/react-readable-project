@@ -1,3 +1,6 @@
+export const LOAD_CATEGORIES = 'LOAD_CATEGORIES';
+export const LOAD_POSTS = 'LOAD_POSTS';
+
 let token = localStorage.token;
 if (!token)
   token = localStorage.token = Math.random()
@@ -5,31 +8,34 @@ if (!token)
     .substr(-8);
 
 const API = `http://localhost:5001`;
-const auth = 'react-redux';
-
-export const LOAD_CATEGORIES = 'LOAD_CATEGORIES';
-export const LOAD_POSTS = 'LOAD_POSTS';
-
-export function getCategories() {
-  return dispatch => {
-    fetch(`${API}/categories`, { headers: { Authorization: auth } })
-      .then(res => res.json())
-      .then(data => dispatch(loadCategories(data.categories)));
-  };
-}
-
-export const loadCategories = data => {
-  return { type: LOAD_CATEGORIES, data };
+export const owner = 'Paula';
+const headers = {
+  Accept: 'application/json',
+  Authorization: owner
 };
 
-export function getPostList() {
-  return dispatch => {
-    fetch(`${API}/posts`, { headers: { Authorization: auth } })
-      .then(res => res.json())
-      .then(data => dispatch(loadPostList(data)));
+export function loadCategories(categories) {
+  return {
+    type: LOAD_CATEGORIES,
+    categories
   };
 }
 
-export const loadPostList = data => {
-  return { type: LOAD_POSTS, data };
+export function loadPosts(posts) {
+  return {
+    type: LOAD_POSTS,
+    posts
+  };
+}
+
+export const categoriesAPI = () => dispatch => {
+  fetch(`${API}/categories`, { headers })
+    .then(res => res.json())
+    .then(data => dispatch(loadCategories(data.categories)));
+};
+
+export const postsAPI = () => dispatch => {
+  fetch(`${API}/posts`, { headers })
+    .then(res => res.json())
+    .then(data => dispatch(loadPosts(data)));
 };

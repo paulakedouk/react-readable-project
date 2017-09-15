@@ -1,5 +1,6 @@
 export const LOAD_CATEGORIES = 'LOAD_CATEGORIES';
 export const LOAD_POSTS = 'LOAD_POSTS';
+export const FETCH_POSTS = 'FETCH_POST';
 
 let token = localStorage.token;
 if (!token)

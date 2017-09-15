@@ -15,15 +15,12 @@ function category(state = {}, action) {
 }
 
 function post(state = {}, action) {
-  const { posts, post } = action;
+  const { posts } = action;
   switch (action.type) {
     case LOAD_POSTS:
       return {
         ...state,
-        posts: posts.reduce((accu, curr) => {
-          accu[curr.id] = curr;
-          return accu;
-        }, {})
+        posts
       };
     default:
       return state;

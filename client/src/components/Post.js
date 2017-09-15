@@ -2,9 +2,8 @@ import React, { Component } from 'react';
 // import '../../node_modules/font-awesome/css/font-awesome.min.css';
 
 import { Link } from 'react-router-dom';
-import { connect } from 'react-redux';
-import PropTypes from 'prop-types';
-
+// import { connect } from 'react-redux';
+// import PropTypes from 'prop-types';
 // import { getCategories } from '../actions';
 
 class Post extends Component {

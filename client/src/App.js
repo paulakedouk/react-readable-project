@@ -12,7 +12,7 @@ import { categoriesAPI, postsAPI } from './actions';
 
 class App extends React.Component {
   componentDidMount() {
-    this.props.getCategories();
+    this.props.categoriesAPI();
   }
 
   render() {
@@ -35,7 +35,7 @@ App.propTypes = {
 
 export default withRouter(
   connect(null, {
-    getCategories: categoriesAPI,
-    getPosts: postsAPI
+    categoriesAPI,
+    postsAPI
   })(App)
 );

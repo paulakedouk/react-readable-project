@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
-import PropTypes from 'prop-types';
 
 import { postsAPI, categoriesAPI } from '../actions';
 
@@ -18,8 +17,6 @@ class MainPage extends Component {
   }
 
   render() {
-    console.log(this.props);
-    const { posts } = this.props;
     return (
       <div className="header">
         <Link to="/">
@@ -29,18 +26,16 @@ class MainPage extends Component {
           Udacity Project by Paula Kedouk |
           <a href="https://github.com/paulakedouk/react-readable-project"> GitHub repository</a>
         </h3>
-        {this.props.posts.map(post => <PostList key={post.id} post={post} />)}
+        <div className="categories">
+          {this.props.posts.map(data => <Categories key={data.id} category={data.category} />)}
+        </div>
+        <div className="postlist-container">
+          <div className="postlist-table">{this.props.posts.map(post => <PostList key={post.id} post={post} />)}</div>
+        </div>
       </div>
     );
   }
 }
-
-MainPage.propTypes = {
-  posts: PropTypes.array,
-  getPosts: PropTypes.func,
-  match: PropTypes.object,
-  categories: PropTypes.array
-};
 
 const mapStateToProps = ({ post, category }) => {
   if (post.posts) {

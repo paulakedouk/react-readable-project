@@ -62,10 +62,6 @@ a:link {
 }
 
 .categories {
-  position: relative;
-  margin-left: auto;
-  margin-right: auto;
-  width: 100%;
   display: flex;
   text-align: center;
   justify-content: center;
@@ -84,7 +80,7 @@ a:link {
 .postlist-table {
   display: grid;
   grid-template-columns: 360px 360px 360px;
-  grid-gap: 80px;
+  /* grid-gap: 80px; */
   color: #444;
   justify-content: center;
 }

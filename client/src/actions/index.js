@@ -29,14 +29,18 @@ export function loadPosts(posts) {
   };
 }
 
-export const categoriesAPI = () => dispatch => {
-  fetch(`${API}/categories`, { headers })
-    .then(res => res.json())
-    .then(data => dispatch(loadCategories(data.categories)));
-};
+export function categoriesAPI() {
+  return dispatch => {
+    return fetch(`${API}/categories`, { headers })
+      .then(res => res.json())
+      .then(data => dispatch(loadCategories(data)));
+  };
+}
 
-export const postsAPI = () => dispatch => {
-  fetch(`${API}/posts`, { headers })
-    .then(res => res.json())
-    .then(data => dispatch(loadPosts(data)));
-};
+export function postsAPI() {
+  return dispatch => {
+    return fetch(`${API}/posts`, { headers })
+      .then(res => res.json())
+      .then(data => dispatch(loadPosts(data)));
+  };
+}

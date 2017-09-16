@@ -6,7 +6,7 @@ import { connect } from 'react-redux';
 
 import PropTypes from 'prop-types';
 import MainPage from './components/MainPage';
-import PostList from './components/PostList';
+import Post from './components/Post';
 import Categories from './components/Categories';
 import { categoriesAPI, postsAPI } from './actions';
 
@@ -20,7 +20,7 @@ class App extends React.Component {
       <div className="App">
         <Switch>
           <Route exact path="/" component={MainPage} />
-          <Route exact path="/posts" component={PostList} />
+          <Route exact path="/posts" component={Post} />
           <Route exact path="/page/:category" component={Categories} />
         </Switch>
       </div>

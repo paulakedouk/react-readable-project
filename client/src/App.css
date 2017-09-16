@@ -26,7 +26,7 @@ a:link {
   color: #dff3ec;
 }
 
-.header h1 {
+.header-text {
   padding-top: 70px;
   font-size: 52px;
   margin: 0;
@@ -58,13 +58,14 @@ a:link {
 .categories-item h1 {
   font-size: 28px;
   color: white;
-  padding-top: 25px;
+  text-align: center;
 }
 
 .categories {
+  margin-top: 100px;
   display: flex;
-  text-align: center;
   justify-content: center;
+  align-items: center;
 }
 
 .categories :not(:last-child) {
@@ -80,7 +81,7 @@ a:link {
 .postlist-table {
   display: grid;
   grid-template-columns: 360px 360px 360px;
-  /* grid-gap: 80px; */
+  grid-gap: 80px;
   color: #444;
   justify-content: center;
 }
@@ -91,13 +92,13 @@ a:link {
 }
 
 .post {
+  background-color: white;
   display: block;
   padding: 27px;
 }
 
 .post h1 {
   font-size: 20px;
-  padding: 0;
 }
 
 .post h2,
@@ -106,8 +107,8 @@ span {
   font-weight: 100;
 }
 
-.post :last-child {
-  padding-bottom: 20px;
+.read-more h2 {
+  color: #333848;
 }
 
 .post-bottom {

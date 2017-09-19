@@ -38,48 +38,28 @@ class NewPost extends Component {
     return (
       <div className="new-post">
         <h1>New Post</h1>
-        <form className="new-post-form" onSubmit={this.handleSubmit}>
-          <div className="form-title">
-            <input type="text" id="title" name="title" value={this.state.title} onChange={this.handleChange} />
-            <label for="title">Title</label>
+        <form className="new-post-form">
+          <div>
+            <input type="text" id="title" name="title" placeholder="Title" />
+            <label htmlFor="title" />
           </div>
 
-          <div className="form-author">
-            <input
-              type="text"
-              id="author"
-              name="author"
-              placeholder="Author"
-              value={this.state.author}
-              onChange={this.handleChange}
-            />
+          <div>
+            <input type="text" id="author" name="author" placeholder="Author" />
+            <label htmlFor="author" />
           </div>
 
-          <div className="form-category">
-            <input
-              type="text"
-              id="category"
-              name="category"
-              placeholder="Category"
-              value={this.state.category}
-              onChange={this.handleChange}
-            />
+          <div>
+            <input type="text" id="category" name="category" placeholder="Category" />
+            <label htmlFor="category" />
           </div>
 
-          <div className="form-body">
-            <input
-              type="textarea"
-              id="body"
-              name="body"
-              placeholder="Text"
-              value={this.state.body}
-              onChange={this.handleChange}
-            />
+          <div>
+            <textarea id="post" name="description" placeholder="Text" />
+            <label htmlFor="post" />
           </div>
 
-          <div className="form-btn">
-            <input type="submit" value="Submit" />
-          </div>
+          <input className="form-btn" type="submit" value="Submit" />
         </form>
       </div>
     );

@@ -29,7 +29,7 @@ class MainPage extends Component {
     return (
       <div className="header">
         <Link to="/">
-          <h1 className="header-text">Readable</h1>
+          <h1>Readable</h1>
         </Link>
         <h3 className="header-text">
           Udacity Project by Paula Kedouk |

@@ -6,6 +6,7 @@ import { postsAPI, categoriesAPI } from '../actions';
 
 import Categories from './Categories';
 import Post from './Post';
+import NewPost from './NewPost';
 
 class MainPage extends Component {
   componentDidMount() {
@@ -39,6 +40,9 @@ class MainPage extends Component {
           <div className="categories"> {categoriesList}</div>
           <div className="postlist-container">
             <div className="postlist-table">{postList}</div>
+          </div>
+          <div className="new-post">
+            <NewPost />
           </div>
         </div>
       </div>

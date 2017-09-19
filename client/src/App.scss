@@ -150,51 +150,49 @@ span {
   box-sizing: border-box;
 }
 
-.new-post h1 {
-  margin-bottom: 100px;
-}
-
-.new-post h1 {
-  font-size: 20px;
-  color: #333848;
-  margin-top: 100px;
-  margin-bottom: 50px;
-}
-
-input[type='text'] {
-  vertical-align: middle;
-}
-
-input,
-textarea {
-  border: none;
-  width: 100%;
-  top: 0;
-  left: 0;
-  z-index: 1;
-  outline: 0;
-  position: relative;
-  padding-top: 25px;
-  border-radius: 5px;
-  vertical-align: middle;
-  margin-bottom: 10px;
-  &:valid {
-    // Hides the label
-    background: white;
+form {
+  width: 320px;
+  float: left;
+  margin: 20px;
+  > div {
+    position: relative;
+    overflow: hidden;
   }
-  &:focus {
-    border-color: #f06d06;
+  input,
+  textarea {
+    width: 100%;
+    border: 2px solid gray;
+    background: none;
+    position: relative;
+    top: 0;
+    left: 0;
+    z-index: 1;
+    padding: 8px 12px;
+    outline: 0;
+    &:valid {
+      // Hides the label
+      background: white;
+    }
+    &:focus {
+      border-color: #f06d06;
+    }
+    &:focus + label {
+      background: #f06d06;
+      color: white;
+      font-size: 70%;
+      padding: 1px 6px;
+      z-index: 2;
+      text-transform: uppercase;
+    }
   }
-  &:focus + label {
-    background: #f06d06;
-    color: white;
-    font-size: 70%;
-    padding: 1px 6px;
-    z-index: 2;
-    text-transform: uppercase;
+  label {
+    transition: background 0.2s, color 0.2s, top 0.2s, bottom 0.2s, right 0.2s, left 0.2s;
+    position: absolute;
+    color: #999;
+    padding: 7px 6px;
   }
-}
-
-.form-body input {
-  height: 60px;
+  textarea {
+    display: block;
+    resize: vertical;
+  }
 }

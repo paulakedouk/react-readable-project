@@ -18,7 +18,7 @@ export default function Post(props) {
           </div>
         </div>
         <div className="read-more">
-          <Link to="/post">
+          <Link to={`details/${props.postID}`}>
             <h2>Read More ></h2>
           </Link>
         </div>

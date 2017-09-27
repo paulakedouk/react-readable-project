@@ -15,19 +15,10 @@ class MainPage extends Component {
     dispatch(postsAPI());
   }
 
-  componentWillMount() {
-    this.unlisten = this.props.history.listen((location, action) => {
-      console.log('on route change');
-    });
-  }
-
-  componentWillUnmount() {
-    this.unlisten();
-  }
-
   render() {
-    // console.log(this.props);
-    let { categories, posts } = this.props;
+    const { categories, posts } = this.props;
+    const { category } = this.props.match.params;
+    const categoryPosts = posts.filter(data => data.category === category);
 
     function loadCategory() {
       if (!categories.path) {
@@ -38,17 +29,6 @@ class MainPage extends Component {
             </Link>
           </div>
         ));
-      }
-    }
-
-    function loadPost() {
-      // console.log(posts);
-      if (!posts.path) {
-        return posts.map(post => <Post post={post} key={post.id} />);
-      } else {
-        posts.filter(post => {
-          return console.log('rest');
-        });
       }
     }
 
@@ -65,7 +45,13 @@ class MainPage extends Component {
         <div className="categories">{loadCategory()}</div>
 
         <div className="postlist-container">
-          <div className="postlist-table">{loadPost()}</div>
+          <div className="postlist-table">
+            {!this.props.match.params.category ? (
+              posts.map(post => <Post key={post.id} post={post} />)
+            ) : (
+              categoryPosts.map(post => <Post key={post.id} post={post} />)
+            )}
+          </div>
         </div>
         <div className="new-post">
           <NewPost />
@@ -76,7 +62,6 @@ class MainPage extends Component {
 }
 
 const mapStateToProps = state => {
-  // console.log(state);
   return {
     categories: state.categories.categories,
     posts: state.posts.posts

@@ -1,46 +1,58 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
+// import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 
+import { createPost } from '../actions';
+
 class NewPost extends Component {
-  state = {
-    author: '',
-    title: '',
-    category: '',
-    body: ''
-  };
+  // componentDidMount() {
+  //   const { dispatch } = this.props;
+  //   dispatch(createPost());
+  // }
 
-  componentDidMount() {
-    if (this.props.post) {
-      const { title, author, category, body } = this.props.post;
-      this.setState({
-        title,
-        author,
-        category,
-        body
-      });
-    }
-  }
+  // constructor(props) {
+  //   super(props);
 
-  handleChange(event) {
-    const { name, value } = event.target;
-    this.setState({
-      [name]: value
-    });
-  }
+  //   this.state = {
+  //     title: '',
+  //     author: '',
+  //     category: '',
+  //     text: ''
+  //   };
 
-  handleSubmit(event) {
-    alert('A name was submitted: ' + this.state.value);
-    event.preventDefault();
-  }
+  //   this.handleChange = this.handleChange.bind(this);
+  //   this.handleSubmit = this.handleSubmit.bind(this);
+  // }
+
+  // handleChange(event) {
+  //   this.setState({
+  //     title: event.target.value,
+  //     author: event.target.value,
+  //     category: event.target.value,
+  //     text: event.target.value
+  //   });
+  // }
+
+  // handleSubmit(values) {
+  //   this.props.createPost(values, () => {
+  //     this.props.history.push('/');
+  //   });
+  // }
 
   render() {
     return (
       <div className="new-post">
         <h1>New Post</h1>
-        <form className="new-post-form">
+        <form className="new-post-form" onSubmit={this.handleSubmit}>
           <div>
-            <input type="text" id="title" name="title" placeholder="Title" />
+            <input
+              type="text"
+              id="title"
+              name="title"
+              placeholder="Title"
+              // value={this.state.value}
+              // onChange={this.handleChange}
+            />
             <label htmlFor="title" />
           </div>
 
@@ -66,8 +78,8 @@ class NewPost extends Component {
   }
 }
 
-const mapStateToProps = ({ category }) => ({
-  ...category
-});
+function mapStateToProps(state) {
+  return { categories: state.category };
+}
 
-export default connect(mapStateToProps, {})(NewPost);
+export default connect(mapStateToProps, { addPost: createPost })(NewPost);

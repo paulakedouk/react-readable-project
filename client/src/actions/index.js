@@ -1,5 +1,6 @@
 export const LOAD_CATEGORIES = 'LOAD_CATEGORIES';
 export const ADD_POST = 'ADD_POST';
+export const EDIT_POST = 'EDIT_POST';
 export const LOAD_POSTS = 'LOAD_POSTS';
 export const FETCH_POSTS = 'FETCH_POST';
 
@@ -17,10 +18,13 @@ const headers = {
   Authorization: owner
 };
 
-const addPost = data => ({
-  type: ADD_POST,
-  data
-});
+export function addPost({ post }) {
+  return { type: ADD_POST, post: post };
+}
+
+export function editPost({ post }) {
+  return { type: EDIT_POST, post };
+}
 
 export function loadCategories(categories) {
   return {
@@ -33,25 +37,6 @@ export function loadPosts(posts) {
   return {
     type: LOAD_POSTS,
     posts
-  };
-}
-
-export function createPost(values, callback) {
-  const { title, author, category, text } = values;
-
-  const postInput = {
-    timestamp: Date.now(),
-    title,
-    author,
-    category,
-    text
-  };
-
-  return dispatch => {
-    return fetch(`${API}/posts`, postInput).then(res => {
-      callback();
-      dispatch(addPost(res.postInput));
-    });
   };
 }
 
@@ -68,5 +53,24 @@ export function postsAPI() {
     return fetch(`${API}/posts`, { headers })
       .then(res => res.json())
       .then(data => dispatch(loadPosts(data)));
+  };
+}
+
+export function newPost(values = [], callback, id) {
+  const { title, author, category, body } = values;
+
+  const post = {
+    timestamp: Date.now(),
+    title,
+    author,
+    category,
+    body
+  };
+
+  return dispatch => {
+    return fetch(`${API}/posts/${id}`, { headers, method: 'POST' }).then(res => {
+      callback();
+      dispatch(addPost(res));
+    });
   };
 }

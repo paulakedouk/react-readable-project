@@ -2,11 +2,11 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 
-import { postsAPI, categoriesAPI } from '../actions';
-// import _ from 'lodash';
+import { newPost, postsAPI, categoriesAPI } from '../actions';
+
 import Categories from './Categories';
 import Post from './Post';
-import NewPost from './NewPost';
+import PostForm from './PostForm';
 
 class MainPage extends Component {
   componentDidMount() {
@@ -14,6 +14,12 @@ class MainPage extends Component {
     dispatch(categoriesAPI());
     dispatch(postsAPI());
   }
+
+  submit = (values, newPost) => {
+    newPost(values => {
+      this.props.history.push('/');
+    });
+  };
 
   render() {
     const { categories, posts } = this.props;
@@ -54,7 +60,9 @@ class MainPage extends Component {
           </div>
         </div>
         <div className="new-post">
-          <NewPost />
+          <h1>New Post</h1>
+
+          <PostForm onSubmit={this.submit} />
         </div>
       </div>
     );

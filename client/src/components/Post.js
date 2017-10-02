@@ -8,7 +8,7 @@ export default function Post(props) {
       <div>
         <h1>{props.post.title}</h1>
         <h2>
-          Today by {props.post.author} in {props.post.category}
+          Today by {props.post.author} in <Link to={`/${props.post.category}`}>{props.post.category}</Link>
         </h2>
         <span>{props.post.body}</span>
         <div className="post-bottom">
@@ -19,7 +19,7 @@ export default function Post(props) {
             </div>
           </div>
           <div className="read-more">
-            <Link to={`details/${props.post.postID}`}>
+            <Link to={`details/${props.post.id}`}>
               <h2>Read More ></h2>
             </Link>
           </div>

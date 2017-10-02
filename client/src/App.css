@@ -134,10 +134,10 @@ span {
 
 /* New Post */
 form,
-.new-post,
-.new-post-form {
-  width: 740px;
+.new-post {
+  max-width: 600px;
   margin: 0 auto;
+  padding: 0;
 }
 
 .new-post h1 {
@@ -146,37 +146,30 @@ form,
   font-size: 20px;
 }
 
-form > div {
-  position: relative;
-}
-
-form input,
-form textarea,
-.form-btn {
+.form-field {
   border: none;
-  padding: 12px;
-  margin-bottom: 15px;
+  padding: 0;
+}
+
+.form-input {
+  margin-bottom: 10px;
+  padding: 10px;
+  min-width: 100%;
+  width: 100%;
+  border: none;
   background-color: white;
-  width: 100%;
-  position: relative;
-  top: 0;
+  -webkit-box-sizing: border-box; /* Safari/Chrome, other WebKit */
+  -moz-box-sizing: border-box; /* Firefox, other Gecko */
+  box-sizing: border-box;
 }
 
-form label {
-  transition: background 0.2s, color 0.2s, right 0.2s, left 0.2s;
-  position: absolute;
-  color: #333848;
-  padding: 7px 6px;
-}
-
-form.new-post-form label,
-.form-btn {
-  top: 0;
-  bottom: 0;
-  left: 0;
-  width: 100%;
-}
-
-.form-btn {
-  text-decoration: none;
+form button {
+  border: none;
+  width: 600px;
+  background-color: white;
+  padding: 10px;
+  cursor: pointer;
+  background: #333848;
+  color: white;
+  margin-bottom: 100px;
 }

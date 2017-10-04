@@ -40,37 +40,25 @@ export function loadPosts(posts) {
   };
 }
 
-export function categoriesAPI() {
-  return dispatch => {
-    return fetch(`${API}/categories`, { headers })
-      .then(res => res.json())
-      .then(data => dispatch(loadCategories(data)));
-  };
-}
+export const categoriesAPI = () => dispatch => {
+  return fetch(`${API}/categories`, { headers })
+    .then(res => res.json())
+    .then(data => dispatch(loadCategories(data)));
+};
 
-export function postsAPI() {
-  return dispatch => {
-    return fetch(`${API}/posts`, { headers })
-      .then(res => res.json())
-      .then(data => dispatch(loadPosts(data)));
-  };
-}
+export const postsAPI = () => dispatch => {
+  return fetch(`${API}/posts`, { headers })
+    .then(res => res.json())
+    .then(data => dispatch(loadPosts(data)));
+};
 
-export function newPost(values = [], callback, id) {
-  const { title, author, category, body } = values;
-
-  const post = {
-    timestamp: Date.now(),
-    title,
-    author,
-    category,
-    body
-  };
-
-  return dispatch => {
-    return fetch(`${API}/posts/${id}`, { headers, method: 'POST' }).then(res => {
-      callback();
-      dispatch(addPost(res));
-    });
-  };
-}
+export const createPost = post => dispatch => {
+  return (
+    fetch(`${API}/posts/${post.id}`),
+    {
+      method: 'POST',
+      headers,
+      post: JSON.stringify(post)
+    }.then(res => res.json())
+  );
+};

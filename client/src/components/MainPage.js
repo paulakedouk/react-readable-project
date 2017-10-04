@@ -2,22 +2,22 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 
-import { newPost, postsAPI, categoriesAPI } from '../actions';
+import { createPost } from '../actions';
 
 import Categories from './Categories';
 import Post from './Post';
 import PostForm from './PostForm';
 
 class MainPage extends Component {
-  componentDidMount() {
-    const { dispatch } = this.props;
-    dispatch(categoriesAPI());
-    dispatch(postsAPI());
-  }
+  state = {
+    posts: []
+  };
 
-  submit = (values, newPost) => {
-    newPost(values => {
-      this.props.history.push('/');
+  createPost = posts => {
+    createPost.create(posts).then(post => {
+      this.setState(state => ({
+        posts: state.posts.concat([post])
+      }));
     });
   };
 
@@ -62,7 +62,11 @@ class MainPage extends Component {
         <div className="new-post">
           <h1>New Post</h1>
 
-          <PostForm onSubmit={this.submit} />
+          <PostForm
+            onCreatePost={post => {
+              this.createPost(post);
+            }}
+          />
         </div>
       </div>
     );

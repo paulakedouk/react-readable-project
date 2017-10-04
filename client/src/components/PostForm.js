@@ -1,47 +1,64 @@
 import React, { Component } from 'react';
-import { connect } from 'react-redux';
-import { Field, reduxForm } from 'redux-form';
-
-import * as actions from '../actions';
-
-const renderField = ({ label, input, meta: { touched, error } }) => (
-  <div className="form-field">
-    <label>{label}</label>
-    <input className="form-input" {...input} type="text" />
-    {touched && error && <span className="error">{error}</span>}
-  </div>
-);
+import PropTypes from 'prop-types';
+import serializeForm from 'form-serialize';
 
 class PostForm extends Component {
+  static propTypes = {
+    posts: PropTypes.array.isRequired
+  };
+
+  state = {
+    query: ''
+  };
+
+  updateQuery = query => {
+    this.setState({ query: query.trim() });
+  };
+
+  handleSubmit = e => {
+    e.preventDefault();
+    const values = serializeForm(e.target, { hash: true });
+    console.log(values);
+    if (this.props.onCreatePost) {
+      this.props.onCreatePost(values);
+    }
+  };
+
   render() {
     return (
-      <form onSubmit={this.props.handleSubmit}>
-        <div>
-          <Field name="title" component={renderField} type="text" label="Title" />
-        </div>
-        <div>
-          <Field name="author" component={renderField} type="text" label="Author" />
-        </div>
+      <div>
+        <form onSubmit={this.handleSubmit}>
+          <div>
+            <input
+              type="text"
+              id="title"
+              name="title"
+              placeholder="Title"
+              onChange={event => this.updateQuery(event.target.value)}
+            />
+            <label htmlFor="title" />
+          </div>
 
-        <div>
-          <Field name="category" component={renderField} label="category">
-            <option name="React">React</option>
-            <option name="Reduc">Redux</option>
-            <option name="Udacity">Udacity</option>
-          </Field>
-        </div>
+          <div>
+            <input type="text" id="author" name="author" placeholder="Author" />
+            <label htmlFor="author" />
+          </div>
 
-        <div>
-          <Field name="text" component={renderField} type="text" label="Text" />
-        </div>
-        <button action="submit">Submit</button>
-      </form>
+          <div>
+            <input type="text" id="category" name="category" placeholder="Category" />
+            <label htmlFor="category" />
+          </div>
+
+          <div>
+            <textarea id="post" name="description" placeholder="Text" />
+            <label htmlFor="post" />
+          </div>
+
+          <input className="form-btn" type="submit" value="Submit" />
+        </form>
+      </div>
     );
   }
 }
-
-PostForm = reduxForm({
-  form: 'newPostForm'
-})(PostForm);
 
 export default PostForm;

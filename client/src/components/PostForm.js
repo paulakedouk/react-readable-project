@@ -1,16 +1,8 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
 import serializeForm from 'form-serialize';
 
 class PostForm extends Component {
-  state = {
-    query: ''
-  };
-
-  updateQuery = query => {
-    this.setState({ query: query.trim() });
-  };
-
   handleSubmit = e => {
     e.preventDefault();
     const values = serializeForm(e.target, { hash: true });
@@ -40,8 +32,8 @@ class PostForm extends Component {
           </div>
 
           <div>
-            <textarea id="post" name="description" placeholder="Text" />
-            <label htmlFor="post" />
+            <textarea id="body" name="body" placeholder="Text" />
+            <label htmlFor="body" />
           </div>
 
           <input className="form-btn" type="submit" value="Submit" />

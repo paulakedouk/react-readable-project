@@ -10,15 +10,16 @@ import PostForm from './PostForm';
 
 class MainPage extends Component {
   state = {
-    posts: null
+    posts: []
   };
 
-  newPost = posts => {
-    createPost(posts).then(post => {
-      this.setState(state => ({
-        posts: state.posts.concat([post])
-      }));
-    });
+  constructor() {
+    super();
+    this.createPost = this.createPost.bind(this);
+  }
+
+  createPost = posts => {
+    this.props.dispatch(createPost(posts));
   };
 
   render() {
@@ -62,7 +63,7 @@ class MainPage extends Component {
         <div className="new-post">
           <h1>New Post</h1>
 
-          <PostForm onCreatePost={this.newPost} />
+          <PostForm onCreatePost={this.createPost} />
         </div>
       </div>
     );

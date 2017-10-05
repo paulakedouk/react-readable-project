@@ -52,12 +52,17 @@ export const postsAPI = () => dispatch => {
     .then(posts => dispatch(loadPosts(posts)));
 };
 
-export const createPost = post => dispatch => {
-  return fetch(`${API}/posts`, post, {
+export const createPost = post => (dispatch, getState) => {
+  post.id = Math.random().toString();
+
+  return fetch(`${API}/posts/${post.id}`, {
     method: 'POST',
     headers,
-    post: JSON.stringify(post)
-  })
-    .then(res => res.json())
-    .then(post => dispatch(loadPosts(post)));
+    body: JSON.stringify(post)
+  }).then(res => {
+    let state = getState();
+    let posts = state.posts.posts.slice();
+    posts.push(post);
+    dispatch(loadPosts(posts));
+  });
 };

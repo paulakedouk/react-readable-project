@@ -1,5 +1,4 @@
 import { combineReducers } from 'redux';
-import { reducer as formReducer } from 'redux-form';
 import { LOAD_CATEGORIES, LOAD_POSTS, ADD_POST, EDIT_POST } from '../actions';
 
 const initialState = {
@@ -37,6 +36,5 @@ function post(state = initialState, action) {
 
 export default combineReducers({
   categories: category,
-  posts: post,
-  form: formReducer
+  posts: post
 });

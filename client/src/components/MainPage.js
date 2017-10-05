@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 
-import { createPost } from '../actions';
+import { createPost, categoriesAPI } from '../actions';
 
 import Categories from './Categories';
 import Post from './Post';
@@ -10,11 +10,11 @@ import PostForm from './PostForm';
 
 class MainPage extends Component {
   state = {
-    posts: []
+    posts: null
   };
 
-  createPost = posts => {
-    createPost.create(posts).then(post => {
+  newPost = posts => {
+    createPost(posts).then(post => {
       this.setState(state => ({
         posts: state.posts.concat([post])
       }));
@@ -62,11 +62,7 @@ class MainPage extends Component {
         <div className="new-post">
           <h1>New Post</h1>
 
-          <PostForm
-            onCreatePost={post => {
-              this.createPost(post);
-            }}
-          />
+          <PostForm onCreatePost={this.newPost} />
         </div>
       </div>
     );

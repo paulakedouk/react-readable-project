@@ -19,7 +19,7 @@ const headers = {
 };
 
 export function addPost({ post }) {
-  return { type: ADD_POST, post: post };
+  return { type: ADD_POST, post };
 }
 
 export function editPost({ post }) {
@@ -49,16 +49,15 @@ export const categoriesAPI = () => dispatch => {
 export const postsAPI = () => dispatch => {
   return fetch(`${API}/posts`, { headers })
     .then(res => res.json())
-    .then(data => dispatch(loadPosts(data)));
+    .then(posts => dispatch(loadPosts(posts)));
 };
 
 export const createPost = post => dispatch => {
-  return (
-    fetch(`${API}/posts/${post.id}`),
-    {
-      method: 'POST',
-      headers,
-      post: JSON.stringify(post)
-    }.then(res => res.json())
-  );
+  return fetch(`${API}/posts`, post, {
+    method: 'POST',
+    headers,
+    post: JSON.stringify(post)
+  })
+    .then(res => res.json())
+    .then(post => dispatch(loadPosts(post)));
 };

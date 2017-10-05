@@ -3,10 +3,6 @@ import PropTypes from 'prop-types';
 import serializeForm from 'form-serialize';
 
 class PostForm extends Component {
-  static propTypes = {
-    posts: PropTypes.array.isRequired
-  };
-
   state = {
     query: ''
   };
@@ -18,7 +14,7 @@ class PostForm extends Component {
   handleSubmit = e => {
     e.preventDefault();
     const values = serializeForm(e.target, { hash: true });
-    console.log(values);
+
     if (this.props.onCreatePost) {
       this.props.onCreatePost(values);
     }
@@ -29,13 +25,7 @@ class PostForm extends Component {
       <div>
         <form onSubmit={this.handleSubmit}>
           <div>
-            <input
-              type="text"
-              id="title"
-              name="title"
-              placeholder="Title"
-              onChange={event => this.updateQuery(event.target.value)}
-            />
+            <input type="text" id="title" name="title" placeholder="Title" />
             <label htmlFor="title" />
           </div>
 

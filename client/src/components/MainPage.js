@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 
-import { createPost, categoriesAPI } from '../actions';
+import { createPost } from '../actions';
 
 import Categories from './Categories';
 import Post from './Post';

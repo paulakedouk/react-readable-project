@@ -1,5 +1,5 @@
 import { combineReducers } from 'redux';
-import { LOAD_CATEGORIES, LOAD_POSTS, ADD_POST, EDIT_POST } from '../actions';
+import { LOAD_CATEGORIES, LOAD_POSTS, ADD_POST, EDIT_POST, VOTE_POST } from '../actions';
 
 const initialState = {
   categories: [],
@@ -27,6 +27,17 @@ function post(state = initialState, action) {
       return {
         ...state,
         posts: [...state.posts, action.post]
+      };
+    case VOTE_POST:
+      return {
+        ...state,
+        posts: {
+          ...state.posts,
+          [action.id]: {
+            ...state.posts[action.id],
+            voteScore: action.voteScore
+          }
+        }
       };
 
     default:

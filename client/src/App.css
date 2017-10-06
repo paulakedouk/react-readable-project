@@ -12,6 +12,7 @@ body {
 
 a:link {
   text-decoration: none;
+  color: #333848;
 }
 
 /* Header */
@@ -21,6 +22,7 @@ a:link {
 }
 
 .header a:visited {
+  text-decoration: none;
   color: #dff3ec;
 }
 
@@ -105,6 +107,11 @@ span {
   font-weight: 100;
 }
 
+.post h2 a {
+  color: #333848 !important;
+  font-weight: bold;
+}
+
 .read-more h2 {
   color: #333848;
 }
@@ -123,6 +130,10 @@ span {
   padding-right: 10px;
 }
 
+.counter {
+  float: right;
+  padding-left: 20px;
+}
 .read-more {
   float: right;
 }

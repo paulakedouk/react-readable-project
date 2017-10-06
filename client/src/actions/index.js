@@ -3,6 +3,7 @@ export const ADD_POST = 'ADD_POST';
 export const EDIT_POST = 'EDIT_POST';
 export const LOAD_POSTS = 'LOAD_POSTS';
 export const FETCH_POSTS = 'FETCH_POST';
+export const VOTE_POST = 'VOTE_POST';
 
 let token = localStorage.token;
 if (!token)
@@ -18,27 +19,26 @@ const headers = {
   Authorization: owner
 };
 
-export function addPost({ post }) {
-  return { type: ADD_POST, post };
-}
+const editPost = ({ post }) => ({
+  type: EDIT_POST,
+  post
+});
 
-export function editPost({ post }) {
-  return { type: EDIT_POST, post };
-}
+const loadCategories = categories => ({
+  type: LOAD_CATEGORIES,
+  categories
+});
 
-export function loadCategories(categories) {
-  return {
-    type: LOAD_CATEGORIES,
-    categories
-  };
-}
+const loadPosts = posts => ({
+  type: LOAD_POSTS,
+  posts
+});
 
-export function loadPosts(posts) {
-  return {
-    type: LOAD_POSTS,
-    posts
-  };
-}
+const votePost = ({ id, voteScore }) => ({
+  type: VOTE_POST,
+  id,
+  voteScore
+});
 
 export const categoriesAPI = () => dispatch => {
   return fetch(`${API}/categories`, { headers })
@@ -65,4 +65,10 @@ export const createPost = post => (dispatch, getState) => {
     posts.push(post);
     dispatch(loadPosts(posts));
   });
+};
+
+export const votePostAPI = (id, vote) => dispatch => {
+  return fetch(`${API}/posts`, { headers })
+    .votePost(id, vote)
+    .then(post => dispatch(votePost(post)));
 };

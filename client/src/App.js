@@ -6,7 +6,7 @@ import './App.css';
 
 import MainPage from './components/MainPage';
 import { categoriesAPI, postsAPI } from './actions';
-import PostForm from './components/PostForm';
+// import PostForm from './components/PostForm';
 import PostDetails from './components/PostDetails';
 
 class App extends React.Component {

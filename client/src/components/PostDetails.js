@@ -1,16 +1,16 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-import { connect } from 'react-redux';
+// import { connect } from 'react-redux';
 
-import { createPost, votePostAPI } from '../actions';
+// import { createPost, votePostAPI } from '../actions';
 // import EditButtons from './EditButtons';
 // import Comments from './Comments';
 // import CommentsAdd from './CommentsAdd';
 
 class PostDetails extends Component {
   render() {
-    console.log(this.props);
-    const { post } = this.props;
+    // console.log(this.props);
+    // const { post } = this.props;
     return (
       <div>
         <Link to="/">

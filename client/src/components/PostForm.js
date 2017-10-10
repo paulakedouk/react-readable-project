@@ -1,11 +1,28 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
+// import { Link } from 'react-router-dom';
 import serializeForm from 'form-serialize';
 
 class PostForm extends Component {
-  handleSubmit = e => {
-    e.preventDefault();
-    const values = serializeForm(e.target, { hash: true });
+  constructor(props) {
+    super(props);
+    this.state = {
+      value: 'Select category'
+    };
+
+    this.handleChange = this.handleChange.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
+  }
+
+  handleChange = event => {
+    event.preventDefault();
+    this.setState({
+      value: event.target.value
+    });
+  };
+
+  handleSubmit = event => {
+    event.preventDefault();
+    const values = serializeForm(event.target, { hash: true });
 
     if (this.props.onCreatePost) {
       this.props.onCreatePost(values);
@@ -13,6 +30,8 @@ class PostForm extends Component {
   };
 
   render() {
+    // console.log(this.props);
+
     return (
       <div>
         <form onSubmit={this.handleSubmit}>
@@ -27,8 +46,16 @@ class PostForm extends Component {
           </div>
 
           <div>
-            <input type="text" id="category" name="category" placeholder="Category" />
-            <label htmlFor="category" />
+            <label htmlFor="category">
+              <select id="category" name="category" value={this.state.value} onChange={this.handleChange}>
+                <option value="select">Select category</option>
+                {this.props.categories.map(category => (
+                  <option key={category.path} value={category.path}>
+                    {category.name}
+                  </option>
+                ))}
+              </select>
+            </label>
           </div>
 
           <div>

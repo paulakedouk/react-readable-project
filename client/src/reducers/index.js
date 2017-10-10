@@ -1,5 +1,5 @@
 import { combineReducers } from 'redux';
-import { LOAD_CATEGORIES, LOAD_POSTS, ADD_POST, EDIT_POST, VOTE_POST } from '../actions';
+import { LOAD_CATEGORIES, LOAD_POSTS, ADD_POST, VOTE_POST } from '../actions';
 
 const initialState = {
   categories: [],

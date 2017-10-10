@@ -19,10 +19,10 @@ const headers = {
   Authorization: owner
 };
 
-const editPost = ({ post }) => ({
-  type: EDIT_POST,
-  post
-});
+// const editPost = ({ post }) => ({
+//   type: EDIT_POST,
+//   post
+// });
 
 const loadCategories = categories => ({
   type: LOAD_CATEGORIES,
@@ -68,7 +68,11 @@ export const createPost = post => (dispatch, getState) => {
 };
 
 export const votePostAPI = (id, vote) => dispatch => {
-  return fetch(`${API}/posts`, { headers })
-    .votePost(id, vote)
-    .then(post => dispatch(votePost(post)));
+  return fetch(`${API}/posts/${id}`, {
+    method: 'POST',
+    headers,
+    body: JSON.stringify(vote)
+  })
+    .then(res => res.json())
+    .then(data => dispatch(votePost(data)));
 };

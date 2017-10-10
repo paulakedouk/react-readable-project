@@ -1,24 +1,13 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
+import { connect } from 'react-redux';
+// import PropTypes from 'prop-types';
+
+import { votePostAPI } from '../actions';
 
 class Post extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      count: this.props.post.voteScore
-    };
-  }
-
-  countUp = () => {
-    this.setState({
-      count: this.state.count + 1
-    });
-  };
-
-  countDown = () => {
-    this.setState({
-      count: this.state.count - 1
-    });
+  voteClicker = vote => {
+    votePostAPI(this.props.post.id, vote);
   };
 
   render() {
@@ -35,9 +24,9 @@ class Post extends Component {
           <div className="post-bottom">
             <div className="btn-like">
               <div>
-                <i className="fa fa-thumbs-up" aria-hidden="true" onClick={this.countUp} />
-                <i className="fa fa-thumbs-down" aria-hidden="true" onClick={this.countDown} />
-                <div className="counter">{this.state.count}</div>
+                <i className="fa fa-thumbs-up" aria-hidden="true" onClick={() => this.voteClicker('upVote')} />
+                <i className="fa fa-thumbs-down" aria-hidden="true" onClick={() => this.voteClicker('downVote')} />
+                <div className="counter">{post.voteScore}</div>
               </div>
             </div>
             <div className="read-more">
@@ -52,4 +41,6 @@ class Post extends Component {
   }
 }
 
-export default Post;
+export default connect(null, {
+  votePostAPI
+})(Post);

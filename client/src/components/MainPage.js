@@ -63,7 +63,7 @@ class MainPage extends Component {
         <div className="new-post">
           <h1>New Post</h1>
 
-          <PostForm onCreatePost={this.createPost} />
+          <PostForm categories={this.props.categories} {...posts} onCreatePost={this.createPost} />
         </div>
       </div>
     );

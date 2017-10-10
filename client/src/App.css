@@ -69,6 +69,18 @@ a:link {
   align-items: center;
 }
 
+.show-all {
+  color: #333848;
+  text-align: center;
+  font-size: 12px;
+  border: 1px solid #333848;
+  border-radius: 15px;
+  padding: 5px;
+  max-width: 100px;
+  margin: 0 auto;
+  margin-top: 20px;
+}
+
 .categories :not(:last-child) {
   margin-right: 80px;
 }

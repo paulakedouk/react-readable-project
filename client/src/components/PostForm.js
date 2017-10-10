@@ -6,7 +6,11 @@ class PostForm extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      value: 'Select category'
+      title: '',
+      author: '',
+      category: '',
+      body: '',
+      error: false
     };
 
     this.handleChange = this.handleChange.bind(this);
@@ -15,9 +19,15 @@ class PostForm extends Component {
 
   handleChange = event => {
     event.preventDefault();
+    const { name, value } = event.target;
     this.setState({
-      value: event.target.value
+      [name]: value
     });
+  };
+
+  validateForm = () => {
+    const { title, author, category, body } = this.state;
+    return title !== '' && author !== '' && category !== '' && body !== '';
   };
 
   handleSubmit = event => {

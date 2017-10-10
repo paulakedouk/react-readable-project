@@ -50,6 +50,11 @@ class MainPage extends Component {
         </h3>
 
         <div className="categories">{loadCategory()}</div>
+        <div>
+          <Link to="/">
+            <h2 className="show-all">Show all</h2>
+          </Link>
+        </div>
 
         <div className="postlist-container">
           <div className="postlist-table">

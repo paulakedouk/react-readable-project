@@ -1,10 +1,17 @@
 import React from 'react';
-import { Route, Switch, withRouter } from 'react-router-dom';
 import './App.css';
+import { Route, Switch, withRouter } from 'react-router-dom';
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 
+import { categoriesAPI } from './actions';
 import MainPage from './components/MainPage';
 
 class App extends React.Component {
+  componentDidMount() {
+    this.props.getCategories();
+  }
+
   render() {
     return (
       <div className="App">
@@ -17,4 +24,12 @@ class App extends React.Component {
   }
 }
 
-export default withRouter(App);
+App.propTypes = {
+  getCategories: PropTypes.func
+};
+
+export default withRouter(
+  connect(null, {
+    getCategories: categoriesAPI
+  })(App)
+);

@@ -4,12 +4,13 @@ import { Route, Switch, withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
-import { categoriesAPI } from './actions';
+import { getCategoriesAPI, getPostsAPI } from './actions';
 import MainPage from './components/MainPage';
 
 class App extends React.Component {
   componentDidMount() {
     this.props.getCategories();
+    this.props.getPosts();
   }
 
   render() {
@@ -25,11 +26,13 @@ class App extends React.Component {
 }
 
 App.propTypes = {
-  getCategories: PropTypes.func
+  getCategories: PropTypes.func,
+  getPosts: PropTypes.func
 };
 
 export default withRouter(
   connect(null, {
-    getCategories: categoriesAPI
+    getCategories: getCategoriesAPI,
+    getPosts: getPostsAPI
   })(App)
 );

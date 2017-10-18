@@ -7,16 +7,6 @@ const initialState = {
   posts: []
 };
 
-function post(state = initialState, action) {
-  switch (action.type) {
-    case LOAD_POSTS:
-      const { posts } = action;
-      return posts;
-    default:
-      return state;
-  }
-}
-
 function category(state = initialState, action) {
   switch (action.type) {
     case LOAD_CATEGORIES:
@@ -26,7 +16,19 @@ function category(state = initialState, action) {
   }
 }
 
+function post(state = {}, action) {
+  switch (action.type) {
+    case LOAD_POSTS:
+      return Object.assign({}, state, {
+        posts: action.posts
+      });
+
+    default:
+      return state;
+  }
+}
+
 export default combineReducers({
-  categories: category,
-  posts: post
+  category,
+  post
 });

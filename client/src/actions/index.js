@@ -1,5 +1,6 @@
 export const LOAD_CATEGORIES = 'LOAD_CATEGORIES';
 export const LOAD_POSTS = 'LOAD_POSTS';
+export const ADD_POST = 'ADD_POST';
 
 const API = `http://localhost:5001`;
 
@@ -10,7 +11,7 @@ const headers = {
 
 /* CATEGORY */
 
-export function loadCategories(categories) {
+function loadCategories(categories) {
   return {
     type: LOAD_CATEGORIES,
     categories
@@ -36,4 +37,19 @@ export const getPostsAPI = () => dispatch => {
   fetch(`${API}/posts`, { headers })
     .then(res => res.json())
     .then(data => dispatch(loadPosts(data)));
+};
+
+export const createPost = postReducer => (dispatch, getState) => {
+  postReducer.id = Math.random().toString();
+  postReducer.timestamp = Date.now();
+
+  fetch(`${API}/posts/${postReducer.id}`, {
+    method: 'POST',
+    headers,
+    body: JSON.stringify(postReducer)
+  });
+  let state = getState();
+  let posts = state.postReducer.posts.slice();
+  posts.push(postReducer);
+  dispatch(loadPosts(posts));
 };

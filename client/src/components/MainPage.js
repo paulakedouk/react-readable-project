@@ -5,8 +5,19 @@ import { Link } from 'react-router-dom';
 import Header from './Header';
 import Categories from './Categories';
 import Post from './Post';
+import PostForm from './PostForm';
+import { createPost } from '../actions';
 
 class MainPage extends Component {
+  constructor() {
+    super();
+    this.createPost = this.createPost.bind(this);
+  }
+
+  createPost = posts => {
+    this.props.dispatch(createPost(posts));
+  };
+
   render() {
     const { categoryReducer, postReducer } = this.props;
     const { category } = this.props.match.params;
@@ -44,6 +55,12 @@ class MainPage extends Component {
               categoryPosts && categoryPosts.map(post => <Post key={post.id} post={post} />)
             )}
           </div>
+        </div>
+
+        <div className="new-post">
+          <h1>New Post</h1>
+
+          <PostForm categories={this.props.categoryReducer} {...postReducer} onCreatePost={this.createPost} />
         </div>
       </div>
     );

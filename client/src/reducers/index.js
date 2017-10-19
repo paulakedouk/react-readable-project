@@ -1,6 +1,6 @@
 import { combineReducers } from 'redux';
 
-import { LOAD_CATEGORIES, LOAD_POSTS } from '../actions';
+import { LOAD_CATEGORIES, LOAD_POSTS, ADD_POST } from '../actions';
 
 const initialState = {
   categories: [],
@@ -17,11 +17,20 @@ function categoryReducer(state = initialState, action) {
 }
 
 function postReducer(state = {}, action) {
+  const { post } = action;
   switch (action.type) {
     case LOAD_POSTS:
       return Object.assign({}, state, {
         posts: action.posts
       });
+    case ADD_POST:
+      return {
+        ...state,
+        posts: {
+          ...state.posts,
+          [post.id]: post
+        }
+      };
 
     default:
       return state;

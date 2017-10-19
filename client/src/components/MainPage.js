@@ -8,26 +8,27 @@ import Post from './Post';
 
 class MainPage extends Component {
   render() {
-    const { category, post } = this.props;
+    const { categoryReducer, postReducer } = this.props;
+    const { category } = this.props.match.params;
+    const categoryPosts = postReducer && postReducer.filter(data => data.category === category);
 
-    function loadPosts() {
-      console.log(post);
-      return post && post.map(post => <Post key={post.id} post={post} />);
+    function loadCategory() {
+      if (!categoryReducer.path) {
+        return categoryReducer.map((cat, index) => (
+          <div key={index}>
+            <Link to={cat.path}>
+              <Categories category={cat} />
+            </Link>
+          </div>
+        ));
+      }
     }
 
     return (
       <div className="header">
         <Header />
 
-        <div className="categories">
-          {category.map((category, index) => (
-            <div key={index}>
-              <Link to={category.path}>
-                <Categories category={category} />
-              </Link>
-            </div>
-          ))}
-        </div>
+        <div className="categories">{loadCategory()}</div>
 
         <div>
           <Link to="/">
@@ -36,7 +37,13 @@ class MainPage extends Component {
         </div>
 
         <div className="postlist-container">
-          <div className="postlist-table">{post && post.map(post => <Post key={post.id} post={post} />)}</div>
+          <div className="postlist-table">
+            {!this.props.match.params.category ? (
+              postReducer && postReducer.map(post => <Post key={post.id} post={post} />)
+            ) : (
+              categoryPosts && categoryPosts.map(post => <Post key={post.id} post={post} />)
+            )}
+          </div>
         </div>
       </div>
     );
@@ -45,8 +52,8 @@ class MainPage extends Component {
 
 const mapStateToProps = state => {
   return {
-    category: state.category.categories,
-    post: state.post.posts
+    categoryReducer: state.categoryReducer.categories,
+    postReducer: state.postReducer.posts
   };
 };
 

@@ -8,13 +8,21 @@ class PostForm extends Component {
       title: '',
       author: '',
       category: '',
-      body: '',
-      value: ''
+      body: ''
     };
 
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
   }
+
+  clearForm = () => {
+    this.setState({
+      title: '',
+      author: '',
+      category: '',
+      body: ''
+    });
+  };
 
   handleChange = event => {
     event.preventDefault();
@@ -24,17 +32,19 @@ class PostForm extends Component {
     });
   };
 
-  validateForm = () => {
-    const { title, author, category, body } = this.state;
-    return title !== '' && author !== '' && category !== '' && body !== '';
-  };
+  //   validateForm = () => {
+  //     const { title, author, category, body } = this.state;
+  //     return title !== '' && author !== '' && category !== '' && body !== '';
+  //   };
 
   handleSubmit = event => {
     event.preventDefault();
+
     const values = serializeForm(event.target, { hash: true });
 
     if (this.props.onCreatePost) {
       this.props.onCreatePost(values);
+      this.clearForm();
     }
   };
 

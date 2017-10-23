@@ -49,10 +49,10 @@ class MainPage extends Component {
 
         <div className="postlist-container">
           <div className="postlist-table">
-            {!this.props.match.params.category ? (
-              postReducer && postReducer.map(post => <Post key={post.id} post={post} />)
+            {!category ? (
+              postReducer && postReducer.map(post => <Post key={post.id} {...post} />)
             ) : (
-              categoryPosts && categoryPosts.map(post => <Post key={post.id} post={post} />)
+              categoryPosts && categoryPosts.map(post => <Post key={post.id} {...post} />)
             )}
           </div>
         </div>

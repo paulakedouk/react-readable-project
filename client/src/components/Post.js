@@ -1,9 +1,19 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
+
+import { votePostAPI } from '../actions';
 
 class Post extends Component {
+  voteClicker = vote => {
+    console.log(this.props);
+    this.props.votePost(this.props.id, vote);
+  };
+
   render() {
-    const { post } = this.props;
+    const post = this.props;
+
     return (
       <div className="post">
         <div>
@@ -32,4 +42,10 @@ class Post extends Component {
   }
 }
 
-export default Post;
+Post.propTypes = {
+  votePost: PropTypes.func
+};
+
+export default connect(null, {
+  votePost: votePostAPI
+})(Post);

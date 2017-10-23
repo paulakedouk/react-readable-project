@@ -126,6 +126,10 @@ span {
   font-weight: bold;
 }
 
+.fa {
+  cursor: pointer;
+}
+
 .read-more h2 {
   color: #333848;
 }

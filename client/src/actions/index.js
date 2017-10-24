@@ -1,41 +1,65 @@
 export const LOAD_CATEGORIES = 'LOAD_CATEGORIES';
-
-export const LOAD_POSTS = 'LOAD_POSTS';
 export const ADD_POST = 'ADD_POST';
+export const EDIT_POST = 'EDIT_POST';
+export const LOAD_POSTS = 'LOAD_POSTS';
+export const FETCH_POSTS = 'FETCH_POST';
 export const VOTE_POST = 'VOTE_POST';
 
-export const LOAD_COMMENTS = 'LOAD_COMMENTS';
+let token = localStorage.token;
+if (!token)
+  token = localStorage.token = Math.random()
+    .toString(36)
+    .substr(-8);
 
 const API = `http://localhost:5001`;
+export const owner = 'Paula';
 
 const headers = {
   Accept: 'application/json',
-  Authorization: 'whatever-you-want'
+  Authorization: owner
 };
 
-/* CATEGORY */
+// const editPost = ({ post }) => ({
+//   type: EDIT_POST,
+//   post
+// });
 
-function loadCategories(categories) {
-  return {
-    type: LOAD_CATEGORIES,
-    categories
-  };
-}
+const loadCategories = categories => ({
+  type: LOAD_CATEGORIES,
+  categories
+});
 
-export const getCategoriesAPI = () => dispatch => {
-  fetch(`${API}/categories`, { headers })
+export const categoriesAPI = () => dispatch => {
+  return fetch(`${API}/categories`, { headers })
     .then(res => res.json())
     .then(data => dispatch(loadCategories(data)));
 };
 
-/* POSTS */
+const loadPosts = posts => ({
+  type: LOAD_POSTS,
+  posts
+});
 
-function loadPosts(posts) {
-  return {
-    type: LOAD_POSTS,
-    posts
-  };
-}
+export const postsAPI = () => dispatch => {
+  return fetch(`${API}/posts`, { headers })
+    .then(res => res.json())
+    .then(posts => dispatch(loadPosts(posts)));
+};
+
+export const createPost = post => (dispatch, getState) => {
+  post.id = Math.random().toString();
+
+  return fetch(`${API}/posts/${post.id}`, {
+    method: 'POST',
+    headers,
+    body: JSON.stringify(post)
+  }).then(res => {
+    let state = getState();
+    let posts = state.posts.posts.slice();
+    posts.push(post);
+    dispatch(loadPosts(posts));
+  });
+};
 
 const votePost = ({ id, voteScore }) => ({
   type: VOTE_POST,
@@ -44,63 +68,11 @@ const votePost = ({ id, voteScore }) => ({
 });
 
 export const votePostAPI = (id, vote) => dispatch => {
-  return fetch(
-    `${API}/posts/${id}`,
-    { option: vote },
-    {
-      method: 'POST',
-      headers,
-      body: JSON.stringify(vote)
-    }
-  )
-    .then(res => res.json())
-    .then(data => dispatch(votePost(data)));
-};
-
-export const getPostsAPI = () => dispatch => {
-  fetch(`${API}/posts`, { headers })
-    .then(res => res.json())
-    .then(data => dispatch(loadPosts(data)));
-};
-
-export const createPost = postReducer => (dispatch, getState) => {
-  postReducer.id = Math.random().toString();
-  postReducer.timestamp = Date.now();
-
-  fetch(`${API}/posts/${postReducer.id}`, {
+  return fetch(`${API}/posts/${id}`, {
     method: 'POST',
     headers,
-    body: JSON.stringify(postReducer)
-  });
-  let state = getState();
-  let posts = state.postReducer.posts.slice();
-  posts.push(postReducer);
-  dispatch(loadPosts(posts));
-};
-
-/* COMMENTS */
-
-const receiveComments = (postId, commentReducer) => ({
-  type: LOAD_COMMENTS,
-  comments: commentReducer,
-  postId: postId
-});
-
-export const commentsAPI = postId => dispatch => {
-  fetch(`${API}/posts/${postId}/comments`, { headers })
-    .then(res => res.json())
-    .then(data => dispatch(receiveComments(postId, data)));
-};
-
-export const createComment = (commentReducer, postId) => dispatch => {
-  console.log(commentReducer);
-  commentReducer.parentId = postId;
-  console.log(postId);
-  fetch(`${API}/comments`, {
-    method: 'POST',
-    headers,
-    body: JSON.stringify(commentReducer)
+    body: JSON.stringify({ option: vote })
   })
     .then(res => res.json())
-    .then(comment => dispatch(commentsAPI(postId)));
+    .then(post => dispatch(votePost(post)));
 };

@@ -1,61 +1,37 @@
 import { combineReducers } from 'redux';
-
-import { LOAD_CATEGORIES, LOAD_POSTS, ADD_POST, VOTE_POST, LOAD_COMMENTS } from '../actions';
+import { LOAD_CATEGORIES, LOAD_POSTS, ADD_POST, VOTE_POST } from '../actions';
 
 const initialState = {
   categories: [],
-  posts: [],
-  comments: []
+  posts: []
 };
 
 function categoryReducer(state = initialState, action) {
   switch (action.type) {
     case LOAD_CATEGORIES:
+      //console.log('actions', action);
       return action.categories;
     default:
       return state;
   }
 }
 
-function postReducer(state = {}, action) {
-  const { post } = action;
+function postReducer(state = initialState, action) {
   switch (action.type) {
     case LOAD_POSTS:
+      //console.log('actions', action);
       return Object.assign({}, state, {
         posts: action.posts
       });
     case ADD_POST:
       return {
         ...state,
-        posts: {
-          ...state.posts,
-          [post.id]: post
-        }
+        posts: [...state.posts, action.post]
       };
     case VOTE_POST:
       return {
         ...state,
-        posts: {
-          ...state.posts,
-          [action.id]: {
-            ...state.posts[action.id],
-            voteScore: action.voteScore
-          }
-        }
-      };
-
-    default:
-      return state;
-  }
-}
-
-function commentReducer(state = {}, action) {
-  switch (action.type) {
-    case LOAD_COMMENTS:
-      const { postId, comments } = action;
-      return {
-        ...state,
-        [postId]: comments
+        posts: [...state.posts.filter(item => item.id === action.id), action.voteScore]
       };
 
     default:
@@ -64,7 +40,6 @@ function commentReducer(state = {}, action) {
 }
 
 export default combineReducers({
-  categoryReducer,
-  postReducer,
-  commentReducer
+  categories: categoryReducer,
+  posts: postReducer
 });

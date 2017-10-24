@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+// import { Link } from 'react-router-dom';
 import serializeForm from 'form-serialize';
 
 class PostForm extends Component {
@@ -8,21 +9,13 @@ class PostForm extends Component {
       title: '',
       author: '',
       category: '',
-      body: ''
+      body: '',
+      error: false
     };
 
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
   }
-
-  clearForm = () => {
-    this.setState({
-      title: '',
-      author: '',
-      category: '',
-      body: ''
-    });
-  };
 
   handleChange = event => {
     event.preventDefault();
@@ -32,53 +25,39 @@ class PostForm extends Component {
     });
   };
 
-  //   validateForm = () => {
-  //     const { title, author, category, body } = this.state;
-  //     return title !== '' && author !== '' && category !== '' && body !== '';
-  //   };
+  validateForm = () => {
+    const { title, author, category, body } = this.state;
+    return title !== '' && author !== '' && category !== '' && body !== '';
+  };
 
   handleSubmit = event => {
     event.preventDefault();
-
     const values = serializeForm(event.target, { hash: true });
 
     if (this.props.onCreatePost) {
       this.props.onCreatePost(values);
-      this.clearForm();
     }
   };
 
   render() {
+    // console.log(this.props);
+
     return (
       <div>
         <form onSubmit={this.handleSubmit}>
           <div>
-            <input
-              type="text"
-              id="title"
-              name="title"
-              placeholder="Title"
-              value={this.state.title}
-              onChange={this.handleChange}
-            />
+            <input type="text" id="title" name="title" placeholder="Title" />
             <label htmlFor="title" />
           </div>
 
           <div>
-            <input
-              type="text"
-              id="author"
-              name="author"
-              placeholder="Author"
-              value={this.state.author}
-              onChange={this.handleChange}
-            />
+            <input type="text" id="author" name="author" placeholder="Author" />
             <label htmlFor="author" />
           </div>
 
           <div>
             <label htmlFor="category">
-              <select id="category" name="category" value={this.state.category} onChange={this.handleChange}>
+              <select id="category" name="category" value={this.state.value} onChange={this.handleChange}>
                 <option value="select">Select category</option>
                 {this.props.categories.map(category => (
                   <option key={category.path} value={category.path}>
@@ -90,7 +69,7 @@ class PostForm extends Component {
           </div>
 
           <div>
-            <textarea id="body" name="body" placeholder="Text" value={this.state.body} onChange={this.handleChange} />
+            <textarea id="body" name="body" placeholder="Text" />
             <label htmlFor="body" />
           </div>
 

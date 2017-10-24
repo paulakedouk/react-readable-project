@@ -1,18 +1,15 @@
 import React from 'react';
-import './App.css';
+import PropTypes from 'prop-types';
 import { Route, Switch, withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
-import PropTypes from 'prop-types';
+import './App.css';
 
-import { getCategoriesAPI, getPostsAPI } from './actions';
 import MainPage from './components/MainPage';
+import { categoriesAPI, postsAPI } from './actions';
+// import PostForm from './components/PostForm';
 import PostDetails from './components/PostDetails';
 
 class App extends React.Component {
-  state = {
-    posts: []
-  };
-
   componentDidMount() {
     this.props.getCategories();
     this.props.getPosts();
@@ -24,7 +21,7 @@ class App extends React.Component {
         <Switch>
           <Route exact path="/" component={MainPage} />
           <Route exact path="/:category" component={MainPage} />
-          <Route path="/:category/:id" render={() => <PostDetails posts={this.state.posts} />} />
+          <Route path="/:category/:postId" component={PostDetails} />
         </Switch>
       </div>
     );
@@ -38,7 +35,7 @@ App.propTypes = {
 
 export default withRouter(
   connect(null, {
-    getCategories: getCategoriesAPI,
-    getPosts: getPostsAPI
+    getCategories: categoriesAPI,
+    getPosts: postsAPI
   })(App)
 );

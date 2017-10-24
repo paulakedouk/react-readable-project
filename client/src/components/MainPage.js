@@ -1,14 +1,18 @@
 import React, { Component } from 'react';
-import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
+import { connect } from 'react-redux';
 
-import Header from './Header';
+import { createPost } from '../actions';
+
 import Categories from './Categories';
 import Post from './Post';
 import PostForm from './PostForm';
-import { createPost } from '../actions';
 
 class MainPage extends Component {
+  state = {
+    posts: []
+  };
+
   constructor() {
     super();
     this.createPost = this.createPost.bind(this);
@@ -19,27 +23,21 @@ class MainPage extends Component {
   };
 
   render() {
-    const { categoryReducer, postReducer } = this.props;
+    const { categories, posts } = this.props;
     const { category } = this.props.match.params;
-    const categoryPosts = postReducer && postReducer.filter(data => data.category === category);
-
-    function loadCategory() {
-      if (!categoryReducer.path) {
-        return categoryReducer.map((cat, index) => (
-          <div key={index}>
-            <Link to={cat.path}>
-              <Categories category={cat} />
-            </Link>
-          </div>
-        ));
-      }
-    }
+    const categoryPosts = posts.filter(data => data.category === category);
 
     return (
       <div className="header">
-        <Header />
+        <Link to="/">
+          <h1 className="header-text">Readable</h1>
+        </Link>
+        <h3 className="header-text">
+          Udacity Project by Paula Kedouk |
+          <a href="https://github.com/paulakedouk/react-readable-project"> GitHub repository</a>
+        </h3>
 
-        <div className="categories">{loadCategory()}</div>
+        <Categories categories={categories} posts={categoryPosts} />
 
         <div>
           <Link to="/">
@@ -50,9 +48,9 @@ class MainPage extends Component {
         <div className="postlist-container">
           <div className="postlist-table">
             {!category ? (
-              postReducer && postReducer.map(post => <Post key={post.id} {...post} />)
+              posts.map(post => <Post key={post.id} post={post} />)
             ) : (
-              categoryPosts && categoryPosts.map(post => <Post key={post.id} {...post} />)
+              categoryPosts.map(post => <Post key={post.id} post={post} />)
             )}
           </div>
         </div>
@@ -60,7 +58,7 @@ class MainPage extends Component {
         <div className="new-post">
           <h1>New Post</h1>
 
-          <PostForm categories={this.props.categoryReducer} {...postReducer} onCreatePost={this.createPost} />
+          <PostForm categories={this.props.categories} {...posts} onCreatePost={this.createPost} />
         </div>
       </div>
     );
@@ -69,8 +67,8 @@ class MainPage extends Component {
 
 const mapStateToProps = state => {
   return {
-    categoryReducer: state.categoryReducer.categories,
-    postReducer: state.postReducer.posts
+    categories: state.categories.categories,
+    posts: state.posts.posts
   };
 };
 

@@ -1,15 +1,21 @@
-import React from 'react';
+import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
 
-export default function Categories(props) {
-  return (
-    <div>
-      <div className="categories-item">
-        {props.category ? (
-          <h1 className="category"> {props.category.name} </h1>
-        ) : (
-          <div> {props.match.params.path} </div>
-        )}
+class Categories extends Component {
+  render() {
+    const { categories } = this.props;
+    return (
+      <div className="categories">
+        {categories.map((cat, index) => (
+          <div className="categories-item" key={index}>
+            <div className="category">
+              <Link to={cat.path}>{cat.name}</Link>
+            </div>
+          </div>
+        ))}
       </div>
-    </div>
-  );
+    );
+  }
 }
+
+export default Categories;

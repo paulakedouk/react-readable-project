@@ -7,13 +7,11 @@ import { votePostAPI } from '../actions';
 
 class Post extends Component {
   voteClicker = vote => {
-    console.log(this.props);
-    this.props.votePost(this.props.id, vote);
+    votePostAPI(this.props.post.id, vote);
   };
 
   render() {
-    const post = this.props;
-
+    const { post } = this.props;
     return (
       <div className="post">
         <div>
@@ -31,7 +29,7 @@ class Post extends Component {
               </div>
             </div>
             <div className="read-more">
-              <Link to={`${post.category}/${post.id}`}>
+              <Link to={`details/${post.id}`}>
                 <h2>Read More ></h2>
               </Link>
             </div>
@@ -42,10 +40,10 @@ class Post extends Component {
   }
 }
 
-Post.propTypes = {
-  votePost: PropTypes.func
+Post.PropTypes = {
+  voteForPost: PropTypes.func.isRequired
 };
 
 export default connect(null, {
-  votePost: votePostAPI
+  votePostAPI
 })(Post);

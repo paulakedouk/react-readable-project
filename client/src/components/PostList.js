@@ -22,7 +22,7 @@ class PostList extends Component {
   };
 
   render() {
-    const { categories, posts } = this.props;
+    const { posts } = this.props;
     const { category } = this.props.match.params;
     const categoryPosts = posts.filter(data => data.category === category);
 
@@ -66,12 +66,13 @@ PostList.propTypes = {
 };
 
 const mapStateToProps = ({ post }) => {
-  console.log(post);
+  // console.log(post.posts);
   if (post.posts) {
     let posts = Object.keys(post.posts)
       .map(postId => post.posts[postId])
       .filter(post => post);
     if (post.sortBy) {
+      console.log(post.sortBy);
       posts.sort(sort_by(post.sortBy));
     }
     return {

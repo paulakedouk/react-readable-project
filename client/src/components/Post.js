@@ -70,9 +70,10 @@ class Post extends Component {
             <h1>{post.title}</h1>
           </Link>
 
-          <Modal show={this.state.edit} onClose={this.toggleEdit}>
+          <Modal show={this.state.edit} toggle={this.toggleEdit} onClose={this.toggleEdit}>
             <PostForm edit post={this.props.post} onClose={this.toggleEdit} />
           </Modal>
+
           <Modal show={this.state.delete} toggle={this.toggleDelete} onClose={this.toggleDelete}>
             <strong>Are you Sure?</strong> This cannot be undone.<br />
             <button style={button} onClick={this.handleDelete}>
@@ -91,6 +92,7 @@ class Post extends Component {
                 <div className="counter">{post.voteScore}</div>
               </div>
             </div>
+            <div className="comment-counter">{this.commentCount()}</div>
           </div>
         </div>
       </div>

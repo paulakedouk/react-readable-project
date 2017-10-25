@@ -40,11 +40,11 @@ class Comments extends Component {
           <button onClick={this.toggleEdit}>Edit</button>
           <button onClick={this.handleDelete}>Delete</button>
         </div>
-        <Modal isOpen={this.state.edit} toggle={this.toggleEdit}>
+        <Modal show={this.state.edit} toggle={this.toggleEdit} onClose={this.toggleEdit}>
           <CommentForm edit comment={this.props.comment} onClose={this.toggleEdit} />
         </Modal>
 
-        <h3>Name</h3>
+        <h3>{comment.author}</h3>
         <p>{comment.body}</p>
         <p className="comment-date">{comment.timestamp}</p>
 

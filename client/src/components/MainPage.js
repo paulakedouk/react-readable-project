@@ -40,4 +40,4 @@ const mapStateToProps = ({ category }) => ({
   ...category
 });
 
-export default connect(mapStateToProps, null)(MainPage);
+export default connect(mapStateToProps)(MainPage);

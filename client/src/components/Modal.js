@@ -19,15 +19,25 @@ class Modal extends React.Component {
       padding: 50
     };
 
-    // The modal "window"
+    // Modal "window"
     const modalStyle = {
       backgroundColor: '#dff3ec',
       borderRadius: '5px',
       maxWidth: '500px',
-      minHeight: '150px',
+      minHeight: '50px',
       margin: '100px auto',
       padding: '30px',
       textAlign: 'center'
+    };
+
+    // Button
+    const button = {
+      backgroundColor: 'white',
+      marginBottom: '10px',
+      height: '30px',
+      minWidth: '100%',
+      width: '100%',
+      border: 'none'
     };
 
     return (
@@ -36,7 +46,9 @@ class Modal extends React.Component {
           {this.props.children}
 
           <div className="footer">
-            <button onClick={this.props.onClose}>Close</button>
+            <button style={button} onClick={this.props.onClose}>
+              Close
+            </button>
           </div>
         </div>
       </div>

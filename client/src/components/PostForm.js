@@ -27,6 +27,15 @@ class PostForm extends Component {
     }
   }
 
+  handleReset = () => {
+    this.setState({
+      author: '',
+      title: '',
+      category: '',
+      body: ''
+    });
+  };
+
   handleChange = event => {
     const { name, value } = event.target;
     this.setState({
@@ -49,6 +58,7 @@ class PostForm extends Component {
       } else {
         this.props.addPost(post);
       }
+      this.handleReset();
     } else {
       this.setState({
         hasError: true
@@ -59,24 +69,14 @@ class PostForm extends Component {
   render() {
     // console.log(this.props);
 
-    const editForm = {
-      backgroundColor: '#dff3ec',
-      borderRadius: '5px',
-      maxWidth: '500px',
-      minHeight: '150px',
-      margin: '100px auto',
-      /* padding: '30px' */
-      textAlign: 'center'
-    };
-
     return (
       <div>
         <div className="new-post">{this.props.edit ? <h1>Edit Post</h1> : <h1>New Post</h1>}</div>
         <form onSubmit={this.handleSubmit}>
           {this.state.hasError && (
-            <h1>
+            <p className="new-post-error">
               <strong>Try again!</strong> You have to complete all fields.
-            </h1>
+            </p>
           )}
           <div>
             <input

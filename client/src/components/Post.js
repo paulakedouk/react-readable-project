@@ -10,7 +10,8 @@ import { votePostAPI, deletePostAPI } from '../actions';
 
 class Post extends Component {
   state = {
-    edit: false
+    edit: false,
+    delete: false
   };
 
   toggleEdit = () => {
@@ -19,17 +20,11 @@ class Post extends Component {
     });
   };
 
-  // toggleEdit = () => {
-  //   this.setState({
-  //     edit: !this.state.edit
-  //   });
-  // };
-
-  // toggleDelete = () => {
-  //   this.setState({
-  //     delete: !this.state.delete
-  //   });
-  // };
+  toggleDelete = () => {
+    this.setState({
+      delete: !this.state.delete
+    });
+  };
 
   handleDelete = () => {
     this.props.deletePost(this.props.post.id);
@@ -54,15 +49,35 @@ class Post extends Component {
 
   render() {
     const { post } = this.props;
+
+    // Button
+    const button = {
+      backgroundColor: '#333848',
+      color: 'white',
+      margin: '20px 0 10px 0',
+      height: '30px',
+      minWidth: '100%',
+      width: '100%',
+      border: 'none'
+    };
+
     return (
       <div>
         <div className="post">
           <button onClick={this.toggleEdit}>Edit</button>
           <button onClick={this.toggleDelete}>Delete</button>
-          <h1>{post.title}</h1>
+          <Link to={`${post.category}/${post.id}`}>
+            <h1>{post.title}</h1>
+          </Link>
 
           <Modal show={this.state.edit} onClose={this.toggleEdit}>
-            <PostForm edit post={this.props.post} />
+            <PostForm edit post={this.props.post} onClose={this.toggleEdit} />
+          </Modal>
+          <Modal show={this.state.delete} toggle={this.toggleDelete} onClose={this.toggleDelete}>
+            <strong>Are you Sure?</strong> This cannot be undone.<br />
+            <button style={button} onClick={this.handleDelete}>
+              Delete this post
+            </button>
           </Modal>
           <h2>
             {post.timestamp} by {post.author} in <Link to={`/${post.category}`}>{post.category}</Link>
@@ -75,11 +90,6 @@ class Post extends Component {
                 <i className="fa fa-thumbs-down" aria-hidden="true" onClick={() => this.handleVote('downVote')} />
                 <div className="counter">{post.voteScore}</div>
               </div>
-            </div>
-            <div className="read-more">
-              <Link to={`${post.category}/${post.id}`}>
-                <h2>Read More ></h2>
-              </Link>
             </div>
           </div>
         </div>

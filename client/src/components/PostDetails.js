@@ -20,13 +20,10 @@ class PostDetails extends Component {
   }
 
   render() {
-    const { post, comment } = this.props;
+    const { post } = this.props;
 
     return (
       <div>
-        <div className="back-btn">
-          <Link to="/">Back</Link>
-        </div>
         <div className="post-new">
           <div className="post-details">
             {post && <Post post={post} onDelete={this.handleDelete} />}

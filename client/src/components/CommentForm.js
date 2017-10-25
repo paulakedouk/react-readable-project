@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
 import { addCommentAPI, editCommentAPI } from '../actions';
+import Modal from './Modal';
 
 class CommentForm extends Component {
   state = {

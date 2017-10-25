@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
 import CommentForm from './CommentForm';
+import Modal from './Modal';
 import { voteCommentAPI, deleteCommentAPI } from '../actions';
 
 class Comments extends Component {
@@ -36,11 +37,16 @@ class Comments extends Component {
     return (
       <div className="comments-item">
         <div className="edit-delete-btn">
-          <button>Edit</button>
+          <button onClick={this.toggleEdit}>Edit</button>
           <button onClick={this.handleDelete}>Delete</button>
         </div>
+        <Modal isOpen={this.state.edit} toggle={this.toggleEdit}>
+          <CommentForm edit comment={this.props.comment} onClose={this.toggleEdit} />
+        </Modal>
+
         <h3>Name</h3>
         <p>{comment.body}</p>
+        <p className="comment-date">{comment.timestamp}</p>
 
         <div className="btn-like">
           <i className="fa fa-thumbs-up" aria-hidden="true" onClick={() => this.handleVote('upVote')} />

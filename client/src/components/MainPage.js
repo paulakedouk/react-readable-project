@@ -1,75 +1,43 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 
-import { createPost } from '../actions';
-
-import Categories from './Categories';
-import Post from './Post';
-import PostForm from './PostForm';
+import Header from './Header';
+import { capitalize } from '../utils/helper';
 
 class MainPage extends Component {
-  state = {
-    posts: []
-  };
-
-  constructor() {
-    super();
-    this.createPost = this.createPost.bind(this);
-  }
-
-  createPost = posts => {
-    this.props.dispatch(createPost(posts));
-  };
-
   render() {
-    const { categories, posts } = this.props;
-    const { category } = this.props.match.params;
-    const categoryPosts = posts.filter(data => data.category === category);
-
     return (
-      <div className="header">
+      <div>
+        <Header />
+
+        <div className="categories">
+          {this.props.categories.map(category => (
+            <div className="categories-item" key={category}>
+              <div className="category">
+                <Link to={category}>{category}</Link>
+              </div>
+            </div>
+          ))}
+        </div>
         <Link to="/">
-          <h1 className="header-text">Readable</h1>
+          <h2 className="show-all">Show all</h2>
         </Link>
-        <h3 className="header-text">
-          Udacity Project by Paula Kedouk |
-          <a href="https://github.com/paulakedouk/react-readable-project"> GitHub repository</a>
-        </h3>
-
-        <Categories categories={categories} posts={categoryPosts} />
-
-        <div>
-          <Link to="/">
-            <h2 className="show-all">Show all</h2>
-          </Link>
-        </div>
-
-        <div className="postlist-container">
-          <div className="postlist-table">
-            {!category ? (
-              posts.map(post => <Post key={post.id} post={post} />)
-            ) : (
-              categoryPosts.map(post => <Post key={post.id} post={post} />)
-            )}
-          </div>
-        </div>
-
-        <div className="new-post">
-          <h1>New Post</h1>
-
-          <PostForm categories={this.props.categories} {...posts} onCreatePost={this.createPost} />
-        </div>
       </div>
     );
   }
 }
-
-const mapStateToProps = state => {
-  return {
-    categories: state.categories.categories,
-    posts: state.posts.posts
-  };
+MainPage.propTypes = {
+  categories: PropTypes.array
 };
 
-export default connect(mapStateToProps)(MainPage);
+MainPage.defaultProps = {
+  categories: []
+};
+
+const mapStateToProps = ({ category }) => ({
+  ...category
+});
+
+export default connect(mapStateToProps, null)(MainPage);

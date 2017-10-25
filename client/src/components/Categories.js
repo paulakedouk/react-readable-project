@@ -1,21 +1,32 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
+import PropTypes from 'prop-types';
 
 class Categories extends Component {
   render() {
-    const { categories } = this.props;
+    const { category } = this.props;
     return (
       <div className="categories">
-        {categories.map((cat, index) => (
-          <div className="categories-item" key={index}>
-            <div className="category">
-              <Link to={cat.path}>{cat.name}</Link>
-            </div>
+        <div className="categories-item">
+          <div className="category">
+            <h1>{category.name}</h1>
           </div>
-        ))}
+        </div>
       </div>
     );
   }
 }
+
+Categories.propTypes = {
+  category: PropTypes.array
+};
+
+Categories.defaultProps = {
+  category: []
+};
+
+const mapStateToProps = ({ category }) => ({
+  ...category
+});
 
 export default Categories;

@@ -1,14 +1,15 @@
-export function trim(str) {
-  return str.length > 16 ? str.slice(0, 16) + '...' : str;
+export function capitalize(str = '') {
+  return typeof str !== 'string' ? '' : str[0].toUpperCase() + str.slice(1);
 }
 
-export function objectFromArray(arr, key = 'id') {
-  if (arr && arr.length) {
-    return arr.reduce((v, i) => {
-      v[i[key]] = i;
-      return v;
-    }, {});
-  } else {
-    return {};
+export const sort_by = key => {
+  let sortOrder = 1;
+  if (key[0] === '-') {
+    sortOrder = -1;
+    key = key.substr(1);
   }
-}
+
+  return function(a, b) {
+    return sortOrder * (a[key] < b[key] ? -1 : a[key] > b[key] ? 1 : 0);
+  };
+};

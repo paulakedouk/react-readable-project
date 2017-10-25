@@ -5,22 +5,24 @@ import { connect } from 'react-redux';
 import './App.css';
 
 import MainPage from './components/MainPage';
-import { categoriesAPI, postsAPI } from './actions';
-// import PostForm from './components/PostForm';
+import PostList from './components/PostList';
+import { getCategories, postsAPI } from './actions';
+import PostForm from './components/PostForm';
 import PostDetails from './components/PostDetails';
 
 class App extends React.Component {
   componentDidMount() {
     this.props.getCategories();
-    this.props.getPosts();
   }
 
   render() {
     return (
       <div className="App">
+        <MainPage />
         <Switch>
-          <Route exact path="/" component={MainPage} />
-          <Route exact path="/:category" component={MainPage} />
+          <Route exact path="/" component={PostList} />
+          <Route exact path="/" component={PostForm} />
+          <Route exact path="/:category" component={PostList} />
           <Route path="/:category/:postId" component={PostDetails} />
         </Switch>
       </div>
@@ -35,7 +37,7 @@ App.propTypes = {
 
 export default withRouter(
   connect(null, {
-    getCategories: categoriesAPI,
+    getCategories: getCategories,
     getPosts: postsAPI
   })(App)
 );

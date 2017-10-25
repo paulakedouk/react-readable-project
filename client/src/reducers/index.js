@@ -1,37 +1,141 @@
 import { combineReducers } from 'redux';
-import { LOAD_CATEGORIES, LOAD_POSTS, ADD_POST, VOTE_POST } from '../actions';
+import {
+  LOAD_CATEGORIES,
+  LOAD_POSTS,
+  LOAD_POST,
+  ADD_POST,
+  VOTE_POST,
+  EDIT_POST,
+  DELETE_POST,
+  SORT_POST,
+  LOAD_COMMENTS,
+  ADD_COMMENT,
+  VOTE_COMMENT,
+  EDIT_COMMENT,
+  DELETE_COMMENT
+} from '../actions';
 
-const initialState = {
-  categories: [],
-  posts: []
-};
-
-function categoryReducer(state = initialState, action) {
+function categoryReducer(state = {}, action) {
+  const { categories } = action;
   switch (action.type) {
     case LOAD_CATEGORIES:
-      //console.log('actions', action);
-      return action.categories;
+      return {
+        ...state,
+        categories
+      };
     default:
       return state;
   }
 }
 
-function postReducer(state = initialState, action) {
+function postReducer(state = {}, action) {
+  const { posts, post } = action;
   switch (action.type) {
     case LOAD_POSTS:
-      //console.log('actions', action);
-      return Object.assign({}, state, {
-        posts: action.posts
-      });
+      return {
+        ...state,
+        posts: posts.reduce((accu, curr) => {
+          accu[curr.id] = curr;
+          return accu;
+        }, {})
+      };
+    case LOAD_POST:
+      return {
+        ...state,
+        posts: {
+          [post.id]: post
+        }
+      };
     case ADD_POST:
       return {
         ...state,
-        posts: [...state.posts, action.post]
+        posts: {
+          ...state.posts,
+          [post.id]: post
+        }
       };
     case VOTE_POST:
       return {
         ...state,
-        posts: [...state.posts.filter(item => item.id === action.id), action.voteScore]
+        posts: {
+          ...state.posts,
+          [action.id]: {
+            ...state.posts[action.id],
+            voteScore: action.voteScore
+          }
+        }
+      };
+    case EDIT_POST:
+      return {
+        ...state,
+        posts: {
+          ...state.posts,
+          [post.id]: post
+        }
+      };
+    case DELETE_POST:
+      return {
+        ...state,
+        posts: {
+          ...state.posts,
+          [action.id]: null
+        }
+      };
+    case SORT_POST:
+      return {
+        ...state,
+        sortBy: action.sort
+      };
+    default:
+      return state;
+  }
+}
+
+function commentReducer(state = {}, action) {
+  const { comment, comments } = action;
+  switch (action.type) {
+    case LOAD_COMMENTS:
+      return {
+        ...state,
+        comments: comments.reduce((accu, curr) => {
+          accu[curr.id] = curr;
+          return accu;
+        }, {})
+      };
+    case ADD_COMMENT:
+      return {
+        ...state,
+        comments: {
+          ...state.comments,
+          [comment.id]: comment
+        }
+      };
+    case VOTE_COMMENT:
+      return {
+        ...state,
+        comments: {
+          ...state.comments,
+          [action.id]: {
+            ...state.comments[action.id],
+            voteScore: action.voteScore
+          }
+        }
+      };
+    case EDIT_COMMENT:
+      return {
+        ...state,
+        comments: {
+          ...state.comments,
+          [comment.id]: comment
+        }
+      };
+    case DELETE_COMMENT:
+      return {
+        ...state,
+        comments: {
+          ...state.comments,
+          [comment.id]: null
+        }
       };
 
     default:
@@ -40,6 +144,7 @@ function postReducer(state = initialState, action) {
 }
 
 export default combineReducers({
-  categories: categoryReducer,
-  posts: postReducer
+  category: categoryReducer,
+  post: postReducer,
+  comment: commentReducer
 });

@@ -3,7 +3,6 @@ export function capitalize(str = '') {
 }
 
 export const sort_by = key => {
-  console.log(key);
   let sortOrder = 1;
   if (key[0] === '-') {
     sortOrder = -1;

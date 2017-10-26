@@ -1,23 +1,13 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
 import { getCommentsAPI, postAPI } from '../actions';
-import Header from './Header';
 import Post from './Post';
 import Comments from './Comments';
 import CommentForm from './CommentForm';
 
 class PostDetails extends Component {
-  handleDelete = value => {
-    console.log(value);
-    const { postId } = this.props.match.params;
-    // this.props.deletePost(his.props.match.params.postId, () => {
-    //   this.props.history.push('/');
-    // });
-  };
-
   componentDidMount() {
     this.props.getPost(this.props.match.params.postId);
     this.props.getComments(this.props.match.params.postId);
@@ -30,7 +20,7 @@ class PostDetails extends Component {
       <div>
         <div className="post-new">
           <div className="post-details">
-            {post && <Post post={post} onDelete={this.handleDelete.bind(this)} />}
+            {post && <Post post={post} />}
 
             <div className="post-details">
               <div className="comments">

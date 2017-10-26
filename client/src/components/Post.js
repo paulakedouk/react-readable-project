@@ -49,7 +49,7 @@ class Post extends Component {
   };
 
   render() {
-    const { post } = this.props;
+    const { post, onDelete } = this.props;
     const date = timeago().format(post.timestamp);
 
     // Button
@@ -78,7 +78,7 @@ class Post extends Component {
 
           <Modal show={this.state.delete} toggle={this.toggleDelete} onClose={this.toggleDelete}>
             <strong>Are you Sure?</strong> This cannot be undone.<br />
-            <button style={button} onClick={this.handleDelete}>
+            <button style={button} onClick={onDelete}>
               Delete this post
             </button>
           </Modal>
@@ -110,6 +110,5 @@ Post.propTypes = {
 };
 
 export default connect(null, {
-  votePost: votePostAPI,
-  deletePost: deletePostAPI
+  votePost: votePostAPI
 })(Post);

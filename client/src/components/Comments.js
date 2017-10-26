@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
 import CommentForm from './CommentForm';
+import timeago from 'timeago.js';
 import Modal from './Modal';
 import { voteCommentAPI, deleteCommentAPI } from '../actions';
 
@@ -34,6 +35,8 @@ class Comments extends Component {
 
   render() {
     const { comment } = this.props;
+    const date = timeago().format(comment.timestamp);
+
     return (
       <div className="comments-item">
         <div className="edit-delete-btn">
@@ -46,7 +49,7 @@ class Comments extends Component {
 
         <h3>{comment.author}</h3>
         <p>{comment.body}</p>
-        <p className="comment-date">{comment.timestamp}</p>
+        <p className="comment-date">{date}</p>
 
         <div className="btn-like">
           <i className="fa fa-thumbs-up" aria-hidden="true" onClick={() => this.handleVote('upVote')} />

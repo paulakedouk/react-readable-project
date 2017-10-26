@@ -2,9 +2,8 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
-import { postsAPI, sortPost, DELETE_POST } from '../actions';
+import { postsAPI, sortPost } from '../actions';
 import { sort_by } from '../utils/helper';
-import api from '../utils/api';
 import Post from './Post';
 import PostForm from './PostForm';
 
@@ -17,20 +16,6 @@ class PostList extends Component {
     }
   }
 
-  handleDelete() {
-    if (window.confirm('Delete Post?')) {
-      const post_id = this.props.post.id;
-
-      api.deletePost(post_id).then(() => {
-        this.props.deletePost({
-          type: DELETE_POST,
-          post_id
-        });
-        this.props.history.push('/');
-      });
-    }
-  }
-
   handleSort = (event, sort) => {
     let selectValue = event.target.value;
     this.props.sortPost({ sort: selectValue });
@@ -40,6 +25,7 @@ class PostList extends Component {
     const { posts } = this.props;
     const { category } = this.props.match.params;
     const categoryPosts = posts.filter(data => data.category === category);
+    const isDeleted = posts.filter(post => post.deleted !== true);
 
     return (
       <div>
@@ -58,17 +44,9 @@ class PostList extends Component {
         <div className="postlist-container">
           <div className="postlist-table">
             {!category ? (
-              posts.map(post => <Post key={post.id} post={post} />)
+              isDeleted.map(post => <Post key={post.id} post={post} isDeleted />)
             ) : (
-              categoryPosts.map(post => (
-                <Post
-                  key={post.id}
-                  post={post}
-                  onDelete={() => {
-                    this.deletePost();
-                  }}
-                />
-              ))
+              categoryPosts.map(post => <Post key={post.id} post={post} />)
             )}
           </div>
         </div>

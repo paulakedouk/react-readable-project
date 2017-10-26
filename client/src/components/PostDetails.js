@@ -13,6 +13,10 @@ class PostDetails extends Component {
     this.props.getComments(this.props.match.params.postId);
   }
 
+  handleDelete = () => {
+    this.props.history.push('/');
+  };
+
   render() {
     const { post } = this.props;
 
@@ -20,7 +24,7 @@ class PostDetails extends Component {
       <div>
         <div className="post-new">
           <div className="post-details">
-            {post && <Post post={post} />}
+            {post && <Post post={post} onDelete={this.handleDelete} />}
 
             <div className="post-details">
               <div className="comments">

@@ -38,16 +38,6 @@ class Post extends Component {
     this.props.votePost(this.props.post.id, vote);
   };
 
-  commentCounter = () => {
-    const comments = this.props.post.comments;
-    if (comments > 1) {
-      return `${comments} comments`;
-    }
-    if (comments === 0 || comments === 1) {
-      return `${comments} comment`;
-    }
-  };
-
   render() {
     const { post } = this.props;
     const date = timeago().format(post.timestamp);
@@ -95,7 +85,7 @@ class Post extends Component {
                 <div className="counter">{post.voteScore}</div>
               </div>
             </div>
-            <div className="comment-counter">{this.commentCounter()}</div>
+            <div className="comment-counter">{post.commentCount} comments</div>
           </div>
         </div>
       </div>

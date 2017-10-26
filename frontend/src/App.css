@@ -50,7 +50,7 @@ a:link {
   width: 360px;
   height: 130px;
   background-color: #333848;
-  margin-top: 100px;
+  margin-top: 50px;
   outline: 2px solid white;
   outline-offset: -12px;
 }
@@ -94,7 +94,7 @@ a:link {
 /* PostList */
 
 .sort-by {
-  margin: 50px 0;
+  margin-top: 50px;
   text-align: center;
 }
 
@@ -120,6 +120,7 @@ a:link {
 .post {
   background-color: white;
   min-height: 200px;
+  margin-top: 50px;
 }
 
 .post,

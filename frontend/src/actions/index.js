@@ -26,20 +26,8 @@ if (!token)
 
 const headers = {
   Accept: 'application/json',
-  Authorization: token
-};
-
-const commentCount = (postArr, id) => {
-  const url = fetch(`${API}/posts/${id}/comments`)
-    .map(post => url(post.id))
-    .all(postArr)
-    .then(resultArr => resultArr.map(result => result.length))
-    .then(lengthArr =>
-      lengthArr.map((length, index) => {
-        postArr[index].comments = length;
-        return postArr[index];
-      })
-    );
+  Authorization: token,
+  'Content-Type': 'application/json'
 };
 
 /* CATEGORIES */
@@ -58,7 +46,7 @@ export const categoriesAPI = () => dispatch => {
 
 const categoryPost = category => dispatch => {
   fetch(`${API}/${category}/posts`, { headers })
-    .then(res => commentCount(res.json()))
+    .then(res => res.json())
     .then(data => dispatch(loadCategories(data)));
 };
 
@@ -85,7 +73,7 @@ const loadPost = post => ({
 });
 
 export const postAPI = id => dispatch => {
-  fetch(`${API}/posts/${id}`)
+  fetch(`${API}/posts/${id}`, { headers })
     .then(res => res.json())
     .then(post => dispatch(loadPost(post)));
 };
@@ -169,7 +157,7 @@ const loadComments = comments => ({
   comments
 });
 
-export const getCommentsAPI = id => dispatch => {
+export const commentsAPI = id => dispatch => {
   fetch(`${API}/posts/${id}/comments`, { headers })
     .then(res => res.json())
     .then(comments => dispatch(loadComments(comments)));
@@ -184,7 +172,7 @@ export const addCommentAPI = comment => dispatch => {
   const id = Math.random().toString();
   const timestamp = Date.now();
   comment = { ...comment, id, timestamp };
-  fetch(`${API}/comments`, comment, {
+  fetch(`${API}/comments`, {
     method: 'POST',
     headers: {
       ...headers,

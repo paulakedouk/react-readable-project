@@ -3,15 +3,11 @@ import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
-import Header from './Header';
-
 class MainPage extends Component {
   render() {
     const { categories } = this.props;
     return (
       <div>
-        <Header />
-
         <div className="categories">
           {categories.map(category => (
             <div className="categories-item" key={category.name}>

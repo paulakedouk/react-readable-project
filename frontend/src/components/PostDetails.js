@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
-import { getCommentsAPI, postAPI } from '../actions';
+import { commentsAPI, postAPI } from '../actions';
 import Post from './Post';
 import Comments from './Comments';
 import CommentForm from './CommentForm';
@@ -76,5 +76,5 @@ const mapStateToProps = ({ post, comment }) => {
 
 export default connect(mapStateToProps, {
   getPost: postAPI,
-  getComments: getCommentsAPI
+  getComments: commentsAPI
 })(PostDetails);

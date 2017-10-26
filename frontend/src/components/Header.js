@@ -10,7 +10,7 @@ export default class componentName extends Component {
         </Link>
         <h3 className="header-text">
           Udacity Project by Paula Kedouk |
-          <a href="https://github.com/paulakedouk/react-readable-project"> GitHub repository</a>
+          <a href="http://anapaula.io"> anapaula.io</a>
         </h3>
       </div>
     );

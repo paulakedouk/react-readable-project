@@ -6,6 +6,7 @@ import { postsAPI, sortPost } from '../actions';
 import { sort_by } from '../utils/helper';
 import Post from './Post';
 import PostForm from './PostForm';
+import MainPage from './MainPage';
 
 class PostList extends Component {
   componentDidMount() {
@@ -29,14 +30,15 @@ class PostList extends Component {
 
     return (
       <div>
+        <MainPage />
         <div className="sort-by">
           <label>
             <select type="select" name="sort" onChange={this.handleSort}>
               <option value="">Sort By</option>
               <option value="voteScore">Score: Low to high</option>
               <option value="-voteScore">Score: High to high</option>
-              <option value="timestamp">Date: New to Old</option>
-              <option value="-timestamp">Date: Old to New</option>
+              <option value="-timestamp">Date: New to Old</option>
+              <option value="+timestamp">Date: Old to New</option>
             </select>
           </label>
         </div>

@@ -1,7 +1,5 @@
 import React, { Component } from 'react';
-// import { Link } from 'react-router-dom';
 
-import serializeForm from 'form-serialize';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
@@ -35,14 +33,14 @@ class PostForm extends Component {
     });
   };
 
-  noEmptyForm = () => {
+  validate = () => {
     const { title, author, category, body } = this.state;
     return title !== '' && author !== '' && category !== '' && body !== '';
   };
 
   handleSubmit = event => {
     event.preventDefault();
-    if (this.noEmptyForm()) {
+    if (this.validate()) {
       const { error, ...post } = this.state;
       if (this.props.edit) {
         this.props.editPost(this.props.post.id, post);
@@ -113,7 +111,7 @@ class PostForm extends Component {
               >
                 <option value="select">Select category</option>
                 {this.props.categories.map(cat => (
-                  <option key={cat.path} value={cat}>
+                  <option key={cat.path} value={cat.name}>
                     {cat.name}
                   </option>
                 ))}

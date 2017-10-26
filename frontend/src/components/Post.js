@@ -38,7 +38,7 @@ class Post extends Component {
     this.props.votePost(this.props.post.id, vote);
   };
 
-  commentCount = () => {
+  commentCounter = () => {
     const comments = this.props.post.comments;
     if (comments > 1) {
       return `${comments} comments`;
@@ -63,6 +63,7 @@ class Post extends Component {
       border: 'none'
     };
 
+    console.log(this.props);
     return (
       <div>
         <div className="post">
@@ -94,7 +95,7 @@ class Post extends Component {
                 <div className="counter">{post.voteScore}</div>
               </div>
             </div>
-            <div className="comment-counter">{this.commentCount()}</div>
+            <div className="comment-counter">{this.commentCounter()}</div>
           </div>
         </div>
       </div>

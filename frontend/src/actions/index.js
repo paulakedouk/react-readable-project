@@ -1,5 +1,3 @@
-import api from '../utils/api';
-
 export const LOAD_CATEGORIES = 'LOAD_CATEGORIES';
 
 export const ADD_POST = 'ADD_POST';
@@ -17,11 +15,32 @@ export const VOTE_COMMENT = 'VOTE_COMMENT';
 export const EDIT_COMMENT = 'EDIT_COMMENT';
 export const DELETE_COMMENT = 'DELETE_COMMENT';
 
+const API = `http://localhost:5001`;
+
 let token = localStorage.token;
+
 if (!token)
   token = localStorage.token = Math.random()
     .toString(36)
     .substr(-8);
+
+const headers = {
+  Accept: 'application/json',
+  Authorization: token
+};
+
+const commentCount = (postArr, id) => {
+  const url = fetch(`${API}/posts/${id}/comments`)
+    .map(post => url(post.id))
+    .all(postArr)
+    .then(resultArr => resultArr.map(result => result.length))
+    .then(lengthArr =>
+      lengthArr.map((length, index) => {
+        postArr[index].comments = length;
+        return postArr[index];
+      })
+    );
+};
 
 /* CATEGORIES */
 
@@ -30,8 +49,17 @@ const loadCategories = categories => ({
   categories
 });
 
-export const getCategories = () => dispatch => {
-  api.getCategories().then(categories => dispatch(loadCategories(categories)));
+export const categoriesAPI = () => dispatch => {
+  fetch(`${API}/categories`, { headers })
+    .then(res => res.json())
+    .then(data => data.categories)
+    .then(data => dispatch(loadCategories(data)));
+};
+
+const categoryPost = category => dispatch => {
+  fetch(`${API}/${category}/posts`, { headers })
+    .then(res => commentCount(res.json()))
+    .then(data => dispatch(loadCategories(data)));
 };
 
 /* POSTS */
@@ -43,9 +71,11 @@ const loadPosts = posts => ({
 
 export const postsAPI = category => dispatch => {
   if (category) {
-    api.getCategoryPosts(category).then(posts => dispatch(loadPosts(posts)));
+    categoryPost(category).then(posts => dispatch(loadPosts(posts)));
   } else {
-    api.getPosts().then(posts => dispatch(loadPosts(posts)));
+    fetch(`${API}/posts`, { headers })
+      .then(res => res.json())
+      .then(posts => dispatch(loadPosts(posts)));
   }
 };
 
@@ -55,7 +85,9 @@ const loadPost = post => ({
 });
 
 export const postAPI = id => dispatch => {
-  api.getPost(id).then(post => dispatch(loadPost(post)));
+  fetch(`${API}/posts/${id}`)
+    .then(res => res.json())
+    .then(post => dispatch(loadPost(post)));
 };
 
 const addPost = post => ({
@@ -64,7 +96,19 @@ const addPost = post => ({
 });
 
 export const addPostAPI = post => dispatch => {
-  api.addPost(post).then(post => dispatch(addPost(post)));
+  const id = Math.random().toString();
+  const timestamp = Date.now();
+  post = { ...post, id, timestamp };
+  fetch(`${API}/posts`, {
+    method: 'POST',
+    headers: {
+      ...headers,
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(post)
+  })
+    .then(res => res.json())
+    .then(post => dispatch(addPost(post)));
 };
 
 const votePost = ({ id, voteScore }) => ({
@@ -74,7 +118,16 @@ const votePost = ({ id, voteScore }) => ({
 });
 
 export const votePostAPI = (id, vote) => dispatch => {
-  api.votePost(id, vote).then(post => dispatch(votePost(post)));
+  fetch(`${API}/posts/${id}`, {
+    method: 'POST',
+    headers: {
+      ...headers,
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({ option: vote })
+  })
+    .then(res => res.json())
+    .then(post => dispatch(votePost(post)));
 };
 
 const editPost = post => ({
@@ -83,7 +136,13 @@ const editPost = post => ({
 });
 
 export const editPostAPI = (id, post) => dispatch => {
-  api.editPost(id, post).then(post => dispatch(editPost(post)));
+  fetch(`${API}/posts/${id}`, {
+    method: 'PUT',
+    headers,
+    body: JSON.stringify(post)
+  })
+    .then(res => res.json())
+    .then(post => dispatch(editPost(post)));
 };
 
 const deletePost = id => ({
@@ -92,7 +151,10 @@ const deletePost = id => ({
 });
 
 export const deletePostAPI = id => dispatch => {
-  api.deletePost(id).then(() => dispatch(deletePost(id)));
+  fetch(`${API}/posts/${id}`, {
+    method: 'DELETE',
+    headers
+  }).then(() => dispatch(deletePost(id)));
 };
 
 export const sortPost = sort => ({
@@ -107,8 +169,10 @@ const loadComments = comments => ({
   comments
 });
 
-export const getCommentsAPI = parentId => dispatch => {
-  api.getComments(parentId).then(comments => dispatch(loadComments(comments)));
+export const getCommentsAPI = id => dispatch => {
+  fetch(`${API}/posts/${id}/comments`, { headers })
+    .then(res => res.json())
+    .then(comments => dispatch(loadComments(comments)));
 };
 
 const addComment = comment => ({
@@ -117,7 +181,19 @@ const addComment = comment => ({
 });
 
 export const addCommentAPI = comment => dispatch => {
-  api.addComment(comment).then(comment => dispatch(addComment(comment)));
+  const id = Math.random().toString();
+  const timestamp = Date.now();
+  comment = { ...comment, id, timestamp };
+  fetch(`${API}/comments`, comment, {
+    method: 'POST',
+    headers: {
+      ...headers,
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(comment)
+  })
+    .then(res => res.json())
+    .then(comment => dispatch(addComment(comment)));
 };
 
 const voteComment = ({ id, voteScore }) => ({
@@ -127,7 +203,16 @@ const voteComment = ({ id, voteScore }) => ({
 });
 
 export const voteCommentAPI = (id, vote) => dispatch => {
-  api.voteComment(id, vote).then(comment => dispatch(voteComment(comment)));
+  fetch(`${API}/comments/${id}`, {
+    method: 'POST',
+    headers: {
+      ...headers,
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({ option: vote })
+  })
+    .then(res => res.json())
+    .then(comment => dispatch(voteComment(comment)));
 };
 
 const editComment = comment => ({
@@ -136,7 +221,13 @@ const editComment = comment => ({
 });
 
 export const editCommentAPI = (id, comment) => dispatch => {
-  api.editComment(id, comment).then(comment => dispatch(editComment(comment)));
+  fetch(`${API}/comments/${id}`, comment, {
+    method: 'PUT',
+    headers,
+    body: JSON.stringify(comment)
+  })
+    .then(res => res.json())
+    .then(comment => dispatch(editComment(comment)));
 };
 
 const deleteComment = comment => ({
@@ -145,5 +236,11 @@ const deleteComment = comment => ({
 });
 
 export const deleteCommentAPI = id => dispatch => {
-  api.deleteComment(id).then(comment => dispatch(deleteComment(comment)));
+  fetch(`${API}/comments/${id}`, {
+    method: 'DELETE',
+    headers,
+    body: JSON.stringify(id)
+  })
+    .then(res => res.json())
+    .then(comment => dispatch(deleteComment(comment)));
 };

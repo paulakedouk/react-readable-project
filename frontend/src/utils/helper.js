@@ -13,3 +13,9 @@ export const sort_by = key => {
     return sortOrder * (a[key] < b[key] ? -1 : a[key] > b[key] ? 1 : 0);
   };
 };
+
+// export function sortByKey(objs, key) {
+//   return objs.sort(function(a, b) {
+//     return a[key] < b[key];
+//   });
+// }

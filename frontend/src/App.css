@@ -94,7 +94,7 @@ a:link {
 /* PostList */
 
 .sort-by {
-  margin-top: 50px;
+  margin: 50px 0;
   text-align: center;
 }
 
@@ -120,7 +120,6 @@ a:link {
 .post {
   background-color: white;
   min-height: 200px;
-  margin-top: 100px;
 }
 
 .post,

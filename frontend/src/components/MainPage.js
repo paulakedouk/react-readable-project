@@ -7,15 +7,16 @@ import Header from './Header';
 
 class MainPage extends Component {
   render() {
+    const { categories } = this.props;
     return (
       <div>
         <Header />
 
         <div className="categories">
-          {this.props.categories.map(category => (
-            <div className="categories-item" key={category}>
+          {categories.map(category => (
+            <div className="categories-item" key={category.name}>
               <div className="category">
-                <Link to={category}>{category}</Link>
+                <Link to={category.path}>{category.name}</Link>
               </div>
             </div>
           ))}
@@ -27,6 +28,7 @@ class MainPage extends Component {
     );
   }
 }
+
 MainPage.propTypes = {
   categories: PropTypes.array
 };

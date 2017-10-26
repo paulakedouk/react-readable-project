@@ -9,6 +9,7 @@ import CommentForm from './CommentForm';
 
 class PostDetails extends Component {
   componentDidMount() {
+    console.log(this.props.getPost);
     this.props.getPost(this.props.match.params.postId);
     this.props.getComments(this.props.match.params.postId);
   }

@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
 // import { Link } from 'react-router-dom';
+
+import serializeForm from 'form-serialize';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
-import { capitalize } from '../utils/helper';
 import { addPostAPI, editPostAPI } from '../actions';
 
 class PostForm extends Component {
@@ -12,7 +13,7 @@ class PostForm extends Component {
     title: '',
     category: '',
     body: '',
-    hasError: false
+    error: false
   };
 
   componentDidMount() {
@@ -27,15 +28,6 @@ class PostForm extends Component {
     }
   }
 
-  handleReset = () => {
-    this.setState({
-      author: '',
-      title: '',
-      category: '',
-      body: ''
-    });
-  };
-
   handleChange = event => {
     const { name, value } = event.target;
     this.setState({
@@ -43,15 +35,15 @@ class PostForm extends Component {
     });
   };
 
-  validateForm = () => {
-    const { author, title, category, body } = this.state;
-    return author !== '' && title !== '' && category !== '' && body !== '';
+  noEmptyForm = () => {
+    const { title, author, category, body } = this.state;
+    return title !== '' && author !== '' && category !== '' && body !== '';
   };
 
   handleSubmit = event => {
     event.preventDefault();
-    if (this.validateForm()) {
-      const { hasError, ...post } = this.state;
+    if (this.noEmptyForm()) {
+      const { error, ...post } = this.state;
       if (this.props.edit) {
         this.props.editPost(this.props.post.id, post);
         this.props.onClose();
@@ -61,19 +53,26 @@ class PostForm extends Component {
       this.handleReset();
     } else {
       this.setState({
-        hasError: true
+        error: true
       });
     }
   };
 
-  render() {
-    // console.log(this.props);
+  handleReset = () => {
+    this.setState({
+      author: '',
+      title: '',
+      category: '',
+      body: ''
+    });
+  };
 
+  render() {
     return (
       <div>
         <div className="new-post">{this.props.edit ? <h1>Edit Post</h1> : <h1>New Post</h1>}</div>
         <form onSubmit={this.handleSubmit}>
-          {this.state.hasError && (
+          {this.state.error && (
             <p className="new-post-error">
               <strong>Try again!</strong> You have to complete all fields.
             </p>
@@ -113,9 +112,9 @@ class PostForm extends Component {
                 readOnly={this.props.edit}
               >
                 <option value="select">Select category</option>
-                {this.props.categories.map(category => (
-                  <option key={category} value={category}>
-                    {capitalize(category)}
+                {this.props.categories.map(cat => (
+                  <option key={cat.path} value={cat}>
+                    {cat.name}
                   </option>
                 ))}
               </select>

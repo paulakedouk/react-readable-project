@@ -44,7 +44,7 @@ class PostList extends Component {
         <div className="postlist-container">
           <div className="postlist-table">
             {!category ? (
-              isDeleted.map(post => <Post key={post.id} post={post} isDeleted />)
+              isDeleted.map(post => <Post key={post.id} post={post} />)
             ) : (
               categoryPosts.map(post => <Post key={post.id} post={post} />)
             )}

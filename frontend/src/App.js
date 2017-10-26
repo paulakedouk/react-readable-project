@@ -6,7 +6,7 @@ import './App.css';
 
 import MainPage from './components/MainPage';
 import PostList from './components/PostList';
-import { getCategories, postsAPI } from './actions';
+import { categoriesAPI, postsAPI } from './actions';
 import PostForm from './components/PostForm';
 import PostDetails from './components/PostDetails';
 
@@ -37,7 +37,7 @@ App.propTypes = {
 
 export default withRouter(
   connect(null, {
-    getCategories: getCategories,
+    getCategories: categoriesAPI,
     getPosts: postsAPI
   })(App)
 );

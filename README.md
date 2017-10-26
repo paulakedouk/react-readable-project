@@ -1,7 +1,8 @@
 Readable: A Content and Comment Web App
 =======================================
 
-##About
+About
+-----
 
 From Udacity:
 > Leverage the strengths of Redux to build a “Readable” application where
@@ -14,7 +15,8 @@ and edit and delete posts and comments.
 Supporting courses:
   * React & Redux
 
-## How to run
+How to run
+-----
 To get started developing right away:
 
 * Install and start the API server

@@ -57,7 +57,6 @@ class PostForm extends Component {
         this.props.onClose();
       } else {
         this.props.addPost(post);
-        this.props.history.push('/');
       }
       this.handleReset();
     } else {

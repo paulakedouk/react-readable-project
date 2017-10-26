@@ -10,8 +10,12 @@ import Comments from './Comments';
 import CommentForm from './CommentForm';
 
 class PostDetails extends Component {
-  handleDelete = () => {
-    this.props.history.push('/');
+  handleDelete = value => {
+    console.log(value);
+    const { postId } = this.props.match.params;
+    // this.props.deletePost(his.props.match.params.postId, () => {
+    //   this.props.history.push('/');
+    // });
   };
 
   componentDidMount() {
@@ -26,7 +30,7 @@ class PostDetails extends Component {
       <div>
         <div className="post-new">
           <div className="post-details">
-            {post && <Post post={post} onDelete={this.handleDelete} />}
+            {post && <Post post={post} onDelete={this.handleDelete.bind(this)} />}
 
             <div className="post-details">
               <div className="comments">

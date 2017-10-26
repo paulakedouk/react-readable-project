@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { Link } from 'react-router-dom';
 
 import { postsAPI, sortPost } from '../actions';
 import { sort_by } from '../utils/helper';
@@ -17,8 +16,9 @@ class PostList extends Component {
     }
   }
 
-  handleSort = sort => {
-    this.props.sortPost(sort);
+  handleSort = (event, sort) => {
+    let selectValue = event.target.value;
+    this.props.sortPost({ sort: selectValue });
   };
 
   render() {
@@ -30,12 +30,12 @@ class PostList extends Component {
       <div>
         <div className="sort-by">
           <label>
-            <select>
-              <option defaultValue>Sort By:</option>
-              <option onClick={() => this.handleSort('timestamp')}>Date: Old to New</option>
-              <option onClick={() => this.handleSort('-timestamp')}>Date: New to Old</option>
-              <option onClick={() => this.handleSort('-voteScore')}>Score: High to Low</option>
-              <option onClick={() => this.handleSort('voteScore')}>Score: Low to High</option>
+            <select type="select" name="sort" onChange={this.handleSort}>
+              <option value="">Sort By</option>
+              <option value="voteScore">Score: High to low</option>
+              <option value="-voteScore">Score: Low to High</option>
+              <option value="timestamp">Date: New to Old</option>
+              <option value="-timestamp">Date: Old to New</option>
             </select>
           </label>
         </div>
@@ -66,13 +66,11 @@ PostList.propTypes = {
 };
 
 const mapStateToProps = ({ post }) => {
-  // console.log(post.posts);
   if (post.posts) {
     let posts = Object.keys(post.posts)
       .map(postId => post.posts[postId])
       .filter(post => post);
     if (post.sortBy) {
-      console.log(post.sortBy);
       posts.sort(sort_by(post.sortBy));
     }
     return {

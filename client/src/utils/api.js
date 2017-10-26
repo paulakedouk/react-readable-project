@@ -42,11 +42,12 @@ api.getCategoryPosts = category => axios.get(`${root}/${category}/posts`).then(r
 /* POSTS */
 
 api.getPosts = () => axios.get(`${root}/posts`).then(res => getCommentCount(res.data));
+
 api.getPost = id => axios.get(`${root}/posts/${id}`).then(res => res.data);
 
 api.addPost = post => {
   const id = Math.random().toString();
-  const timestamp = Math.floor(Date.now() / 1000);
+  const timestamp = Date.now();
   post = { ...post, id, timestamp };
   return axios.post(`${root}/posts`, post).then(res => res.data);
 };

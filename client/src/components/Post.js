@@ -5,6 +5,7 @@ import PropTypes from 'prop-types';
 
 import Modal from './Modal';
 import PostForm from './PostForm';
+import timeago from 'timeago.js';
 
 import { votePostAPI, deletePostAPI } from '../actions';
 
@@ -49,6 +50,7 @@ class Post extends Component {
 
   render() {
     const { post } = this.props;
+    const date = timeago().format(post.timestamp);
 
     // Button
     const button = {
@@ -81,7 +83,7 @@ class Post extends Component {
             </button>
           </Modal>
           <h2>
-            {post.timestamp} by {post.author} in <Link to={`/${post.category}`}>{post.category}</Link>
+            {date} by {post.author} in <Link to={`/${post.category}`}>{post.category}</Link>
           </h2>
           <span>{post.body}</span>
           <div className="post-bottom">

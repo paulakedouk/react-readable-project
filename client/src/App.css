@@ -103,10 +103,6 @@ a:link {
   width: 20%;
 }
 
-.postlist-container {
-  margin-top: 50px;
-}
-
 .postlist-table {
   display: grid;
   grid-template-columns: 360px 360px 360px;
@@ -124,6 +120,7 @@ a:link {
 .post {
   background-color: white;
   min-height: 200px;
+  margin-top: 100px;
 }
 
 .post,

@@ -39,9 +39,9 @@ class Comments extends Component {
 
     return (
       <div className="comments-item">
-        <div className="edit-delete-btn">
-          <button onClick={this.toggleEdit}>Edit</button>
-          <button onClick={this.handleDelete}>Delete</button>
+        <div className="edit-delete edit-delete-btn">
+          <i className="fa fa-pencil" aria-hidden="true" onClick={this.toggleEdit} />
+          <i className="fa fa-trash" aria-hidden="true" onClick={this.handleDelete} />
         </div>
         <Modal show={this.state.edit} toggle={this.toggleEdit} onClose={this.toggleEdit}>
           <CommentForm edit comment={this.props.comment} onClose={this.toggleEdit} />

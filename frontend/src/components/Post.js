@@ -55,10 +55,13 @@ class Post extends Component {
 
     console.log(this.props);
     return (
-      <div>
+      <div className="post-items">
         <div className="post">
-          <button onClick={this.toggleEdit}>Edit</button>
-          <button onClick={this.toggleDelete}>Delete</button>
+          <div className="edit-delete">
+            <i className="fa fa-pencil" aria-hidden="true" onClick={this.toggleEdit} />
+            <i className="fa fa-trash" aria-hidden="true" onClick={this.toggleDelete} />
+          </div>
+
           <Link to={`${post.category}/${post.id}`}>
             <h1>{post.title}</h1>
           </Link>

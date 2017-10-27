@@ -7,7 +7,7 @@ class MainPage extends Component {
   render() {
     const { categories } = this.props;
     return (
-      <div>
+      <div className="categories-session">
         <div className="categories">
           {categories.map(category => (
             <div className="categories-item" key={category.name}>

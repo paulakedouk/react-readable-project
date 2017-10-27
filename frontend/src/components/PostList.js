@@ -29,7 +29,7 @@ class PostList extends Component {
     const isDeleted = posts.filter(post => post.deleted !== true);
 
     return (
-      <div>
+      <div className="mainpage">
         <MainPage />
         <div className="sort-by">
           <label>

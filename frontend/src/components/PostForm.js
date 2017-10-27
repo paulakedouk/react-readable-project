@@ -67,7 +67,7 @@ class PostForm extends Component {
 
   render() {
     return (
-      <div>
+      <div className="new-post-form">
         <div className="new-post">{this.props.edit ? <h1>Edit Post</h1> : <h1>New Post</h1>}</div>
         <form onSubmit={this.handleSubmit}>
           {this.state.error && (

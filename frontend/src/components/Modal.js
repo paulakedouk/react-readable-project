@@ -24,9 +24,9 @@ class Modal extends React.Component {
       backgroundColor: '#dff3ec',
       borderRadius: '5px',
       maxWidth: '500px',
-      minHeight: '50px',
+      minHeight: '100px',
       margin: '100px auto',
-      padding: '30px',
+      padding: '50px',
       textAlign: 'center'
     };
 

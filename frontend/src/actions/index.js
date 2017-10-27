@@ -209,7 +209,7 @@ const editComment = comment => ({
 });
 
 export const editCommentAPI = (id, comment) => dispatch => {
-  fetch(`${API}/comments/${id}`, comment, {
+  fetch(`${API}/comments/${id}`, {
     method: 'PUT',
     headers,
     body: JSON.stringify(comment)

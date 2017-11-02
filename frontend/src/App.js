@@ -4,9 +4,10 @@ import { Route, Switch, withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import './App.css';
 
-import Header from './components/Header';
+import MainPage from './components/MainPage';
 import PostList from './components/PostList';
-import { categoriesAPI, postsAPI } from './actions';
+import { categoriesAPI } from './actions/category';
+import { postsAPI } from './actions/post';
 import PostForm from './components/PostForm';
 import PostDetails from './components/PostDetails';
 
@@ -18,7 +19,7 @@ class App extends React.Component {
   render() {
     return (
       <div className="App">
-        <Header />
+        <MainPage />
         <Switch>
           <Route exact path="/" component={PostList} />
           <Route exact path="/" component={PostForm} />

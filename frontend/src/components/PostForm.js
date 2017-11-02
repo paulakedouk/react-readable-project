@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
-import { addPostAPI, editPostAPI } from '../actions';
+import { addPostAPI, editPostAPI } from '../actions/post';
 
 class PostForm extends Component {
   state = {

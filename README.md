@@ -28,3 +28,5 @@ To get started developing right away:
     - `cd frontend`
     - `npm install`
     - `npm start`
+
+This is the second project for [Udacity](https://www.udacity.com)'s [React Developer Nanoderee](https://www.udacity.com/course/react-nanodegree--nd019)

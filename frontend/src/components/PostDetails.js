@@ -2,14 +2,15 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
-import { commentsAPI, postAPI } from '../actions';
+import { commentsAPI } from '../actions/comment';
+import { postAPI } from '../actions/post';
 import Post from './Post';
 import Comments from './Comments';
 import CommentForm from './CommentForm';
+import MainPage from './MainPage';
 
 class PostDetails extends Component {
   componentDidMount() {
-    console.log(this.props.getPost);
     this.props.getPost(this.props.match.params.postId);
     this.props.getComments(this.props.match.params.postId);
   }

@@ -7,9 +7,15 @@ import { postAPI } from '../actions/post';
 import Post from './Post';
 import Comments from './Comments';
 import CommentForm from './CommentForm';
-import MainPage from './MainPage';
+import NotFound from './NotFound';
 
 class PostDetails extends Component {
+  componentWillMount() {
+    if (typeof post === 'undefined') {
+      return <NotFound />;
+    }
+  }
+
   componentDidMount() {
     this.props.getPost(this.props.match.params.postId);
     this.props.getComments(this.props.match.params.postId);
@@ -20,25 +26,27 @@ class PostDetails extends Component {
   };
 
   render() {
-    const { post } = this.props;
+    const { post, comments } = this.props;
+    // console.log(this.props);
+    const commentsMap = comments.map(comment => (
+      <div key={comment.id}>
+        <Comments comment={comment} />
+      </div>
+    ));
 
     return (
       <div>
         <div className="post-new">
           <div className="post-details">
-            {post && <Post post={post} onDelete={this.handleDelete} />}
+            {post && <Post key={post.id} post={post} onDelete={this.handleDelete} />}
 
             <div className="post-details">
               <div className="comments">
                 <h2>Comments</h2>
-                {this.props.comments.map(comment => (
-                  <div key={comment.id}>
-                    <Comments comment={comment} />
-                  </div>
-                ))}
+                {!post ? <p>No comments yet.</p> : commentsMap}
               </div>
               <div className="new-comment">
-                <CommentForm parentId={this.props.match.params.postId} />
+                <CommentForm id={this.props.match.params.postId} />
               </div>
             </div>
           </div>

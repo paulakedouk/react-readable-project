@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import CommentForm from './CommentForm';
 import timeago from 'timeago.js';
 import Modal from './Modal';
-import { voteCommentAPI, deleteCommentAPI } from '../actions/comment';
+import * as actions from '../actions/comment';
 
 class Comments extends Component {
   state = {
@@ -26,11 +26,11 @@ class Comments extends Component {
   };
 
   handleVote = vote => {
-    this.props.voteComment(this.props.comment.id, vote);
+    this.props.voteCommentAPI(this.props.comment.id, vote);
   };
 
   handleDelete = () => {
-    this.props.deleteComment(this.props.comment.id);
+    this.props.deleteCommentAPI(this.props.comment.id);
   };
 
   render() {
@@ -66,7 +66,4 @@ Comment.propTypes = {
   comment: PropTypes.object.isRequired
 };
 
-export default connect(null, {
-  voteComment: voteCommentAPI,
-  deleteComment: deleteCommentAPI
-})(Comments);
+export default connect(null, actions)(Comments);

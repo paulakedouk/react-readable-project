@@ -13,7 +13,7 @@ export const categoriesAPI = () => dispatch => {
     .then(data => dispatch(loadCategories(data)));
 };
 
-export const categoryPost = category => dispatch => {
+export const categoryPostAPI = category => dispatch => {
   fetch(`${API}/${category}/posts`, { headers })
     .then(res => res.json())
     .then(data => dispatch(loadCategories(data)));

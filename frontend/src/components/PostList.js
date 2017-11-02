@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
 import { postsAPI, sortPost } from '../actions/post';
+import { categoryPostAPI } from '../actions/category';
 import { sort_by } from '../utils/helper';
 import Post from './Post';
 import PostForm from './PostForm';
@@ -10,7 +11,7 @@ import PostForm from './PostForm';
 class PostList extends Component {
   componentDidMount() {
     if (this.props.match.params.category) {
-      this.props.postsAPI(this.props.match.params.category);
+      this.props.categoryPostAPI();
     } else {
       this.props.postsAPI();
     }
@@ -29,7 +30,6 @@ class PostList extends Component {
 
     return (
       <div className="mainpage">
-
         <div className="sort-by">
           <label>
             <select type="select" name="sort" onChange={this.handleSort}>
@@ -44,11 +44,9 @@ class PostList extends Component {
 
         <div className="postlist-container">
           <div className="postlist-table">
-            {!category ? (
-              isDeleted.map(post => <Post key={post.id} post={post} />)
-            ) : (
-                categoryPosts.map(post => <Post key={post.id} post={post} />)
-              )}
+            {!category
+              ? isDeleted.map(post => <Post key={post.id} post={post} />)
+              : categoryPosts.map(post => <Post key={post.id} post={post} />)}
           </div>
         </div>
 
@@ -63,6 +61,7 @@ class PostList extends Component {
 PostList.propTypes = {
   match: PropTypes.object,
   postsAPI: PropTypes.func,
+  categoryPost: PropTypes.func,
   sortPost: PropTypes.func,
   posts: PropTypes.array
 };
@@ -86,8 +85,8 @@ const mapStateToProps = ({ post }) => {
   }
 };
 
-
 export default connect(mapStateToProps, {
   postsAPI,
-  sortPost
+  sortPost,
+  categoryPostAPI
 })(PostList);

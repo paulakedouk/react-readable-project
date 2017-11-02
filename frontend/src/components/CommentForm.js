@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
-import { addCommentAPI, editCommentAPI } from '../actions/comment';
+import * as actions from '../actions/comment';
 
 class CommentForm extends Component {
   state = {
@@ -46,11 +46,11 @@ class CommentForm extends Component {
     if (this.validateForm()) {
       let { hasError, ...comment } = this.state;
       if (this.props.edit) {
-        this.props.editComment(this.props.comment.id, comment);
+        this.props.editCommentAPI(this.props.comment.id, comment);
         this.props.onClose();
       } else {
-        comment.parentId = this.props.parentId;
-        this.props.addComment(comment);
+        comment.id = this.props.id;
+        this.props.addCommentAPI(comment);
       }
       this.handleReset();
     } else {
@@ -68,9 +68,9 @@ class CommentForm extends Component {
         </div>
         <form onSubmit={this.handleSubmit}>
           {this.state.hasError && (
-            <h1>
+            <p className="new-post-error">
               <strong>Try again!</strong> You have to complete all fields.
-            </h1>
+            </p>
           )}
           <div>
             <label htmlFor="author" />
@@ -105,13 +105,10 @@ class CommentForm extends Component {
 CommentForm.propTypes = {
   parentId: PropTypes.string,
   edit: PropTypes.bool,
-  editComment: PropTypes.func,
+  editCommentAPI: PropTypes.func,
   onClose: PropTypes.func,
   comment: PropTypes.object,
-  addComment: PropTypes.func
+  addCommentAPI: PropTypes.func
 };
 
-export default connect(null, {
-  addComment: addCommentAPI,
-  editComment: editCommentAPI
-})(CommentForm);
+export default connect(null, actions)(CommentForm);

@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
-import { addPostAPI, editPostAPI } from '../actions/post';
+import * as actions from '../actions/post';
 
 class PostForm extends Component {
   state = {
@@ -43,10 +43,10 @@ class PostForm extends Component {
     if (this.validate()) {
       const { error, ...post } = this.state;
       if (this.props.edit) {
-        this.props.editPost(this.props.post.id, post);
+        this.props.editPostAPI(this.props.post.id, post);
         this.props.onClose();
       } else {
-        this.props.addPost(post);
+        this.props.addPostAPI(post);
       }
       this.handleReset();
     } else {
@@ -134,8 +134,8 @@ class PostForm extends Component {
 PostForm.propTypes = {
   categories: PropTypes.array,
   edit: PropTypes.bool,
-  addPost: PropTypes.func,
-  editPost: PropTypes.func,
+  addPostAPI: PropTypes.func,
+  editPostAPI: PropTypes.func,
   onClose: PropTypes.func,
   post: PropTypes.object,
   history: PropTypes.object
@@ -149,7 +149,4 @@ const mapStateToProps = ({ category }) => ({
   ...category
 });
 
-export default connect(mapStateToProps, {
-  addPost: addPostAPI,
-  editPost: editPostAPI
-})(PostForm);
+export default connect(mapStateToProps, actions)(PostForm);

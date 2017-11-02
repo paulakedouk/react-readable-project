@@ -29,14 +29,14 @@ class Post extends Component {
   };
 
   handleDelete = () => {
-    this.props.deletePost(this.props.post.id);
+    this.props.deletePostAPI(this.props.post.id);
     if (this.props.onDelete) {
       this.props.onDelete();
     }
   };
 
   handleVote = vote => {
-    this.props.votePost(this.props.post.id, vote);
+    this.props.votePostAPI(this.props.post.id, vote);
   };
 
   render() {
@@ -55,48 +55,48 @@ class Post extends Component {
     };
 
     return (
-
       <div className="post-items">
-        {typeof post.id === "undefined" ? (
-          <div><NotFound /></div>
+        {typeof post.id === 'undefined' ? (
+          <div>
+            <NotFound />
+          </div>
         ) : (
-
-            <div className="post">
-              <div className="edit-delete">
-                <i className="fa fa-pencil" aria-hidden="true" onClick={this.toggleEdit} />
-                <i className="fa fa-trash" aria-hidden="true" onClick={this.toggleDelete} />
-              </div>
-
-              <Link to={`${post.category}/${post.id}`}>
-                <h1>{post.title}</h1>
-              </Link>
-
-              <Modal show={this.state.edit} toggle={this.toggleEdit} onClose={this.toggleEdit}>
-                <PostForm edit post={this.props.post} onClose={this.toggleEdit} />
-              </Modal>
-
-              <Modal show={this.state.delete} toggle={this.toggleDelete} onClose={this.toggleDelete}>
-                <strong>Are you Sure?</strong> This cannot be undone.<br />
-                <button style={button} onClick={this.handleDelete}>
-                  Delete this post
-            </button>
-              </Modal>
-              <h2>
-                {date} by {post.author} in <Link to={`/${post.category}`}>{post.category}</Link>
-              </h2>
-              <span>{post.body}</span>
-              <div className="post-bottom">
-                <div className="btn-like">
-                  <div>
-                    <i className="fa fa-thumbs-up" aria-hidden="true" onClick={() => this.handleVote('upVote')} />
-                    <i className="fa fa-thumbs-down" aria-hidden="true" onClick={() => this.handleVote('downVote')} />
-                    <div className="counter">{post.voteScore}</div>
-                  </div>
-                </div>
-                <div className="comment-counter">{post.commentCount} comments</div>
-              </div>
+          <div className="post">
+            <div className="edit-delete">
+              <i className="fa fa-pencil" aria-hidden="true" onClick={this.toggleEdit} />
+              <i className="fa fa-trash" aria-hidden="true" onClick={this.toggleDelete} />
             </div>
-          )}
+
+            <Link to={`${post.category}/${post.id}`}>
+              <h1>{post.title}</h1>
+            </Link>
+
+            <Modal show={this.state.edit} toggle={this.toggleEdit} onClose={this.toggleEdit}>
+              <PostForm edit post={this.props.post} onClose={this.toggleEdit} />
+            </Modal>
+
+            <Modal show={this.state.delete} toggle={this.toggleDelete} onClose={this.toggleDelete}>
+              <strong>Are you Sure?</strong> This cannot be undone.<br />
+              <button style={button} onClick={this.handleDelete}>
+                Delete this post
+              </button>
+            </Modal>
+            <h2>
+              {date} by {post.author} in <Link to={`/${post.category}`}>{post.category}</Link>
+            </h2>
+            <span>{post.body}</span>
+            <div className="post-bottom">
+              <div className="btn-like">
+                <div>
+                  <i className="fa fa-thumbs-up" aria-hidden="true" onClick={() => this.handleVote('upVote')} />
+                  <i className="fa fa-thumbs-down" aria-hidden="true" onClick={() => this.handleVote('downVote')} />
+                  <div className="counter">{post.voteScore}</div>
+                </div>
+              </div>
+              <div className="comment-counter">{post.commentCount} comments</div>
+            </div>
+          </div>
+        )}
       </div>
     );
   }
@@ -104,12 +104,9 @@ class Post extends Component {
 
 Post.propTypes = {
   post: PropTypes.object.isRequired,
-  votePost: PropTypes.func,
-  deletePost: PropTypes.func,
+  votePostAPI: PropTypes.func,
+  deletePostAPI: PropTypes.func,
   onDelete: PropTypes.func
 };
 
-export default connect(null, {
-  votePost: actions.votePostAPI,
-  deletePost: actions.deletePostAPI
-})(Post);
+export default connect(null, actions)(Post);

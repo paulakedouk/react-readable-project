@@ -36,22 +36,28 @@ class PostDetails extends Component {
 
     return (
       <div>
-        <div className="post-new">
-          <div className="post-details">
-            {post && <Post key={post.id} post={post} onDelete={this.handleDelete} />}
-
+        {typeof post.id === 'undefined' ? (
+          <div>
+            <NotFound />
+          </div>
+        ) : (
+          <div className="post-new">
             <div className="post-details">
-              <div className="comments">
-                <h2>Comments</h2>
-                {!post ? <p>No comments yet.</p> : commentsMap}
-              </div>
-              <div className="new-comment">
-                <CommentForm id={this.props.match.params.postId} />
+              {post && <Post key={post.id} post={post} onDelete={this.handleDelete} />}
+
+              <div className="post-details">
+                <div className="comments">
+                  <h2>Comments</h2>
+                  {post ? commentsMap : <p>No comments yet.</p>}
+                </div>
+                <div className="new-comment">
+                  <CommentForm id={this.props.match.params.postId} />
+                </div>
               </div>
             </div>
+            )}
           </div>
-          )}
-        </div>
+        )}
       </div>
     );
   }

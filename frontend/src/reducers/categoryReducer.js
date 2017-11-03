@@ -1,14 +1,10 @@
-import { LOAD_CATEGORIES } from '../actions/types'
+import { LOAD_CATEGORIES } from '../actions/types';
 
 export function categoryReducer(state = {}, action) {
-    const { categories } = action;
-    switch (action.type) {
-        case LOAD_CATEGORIES:
-            return {
-                ...state,
-                categories
-            };
-        default:
-            return state;
-    }
+  const { categories } = action;
+  if (action.type === LOAD_CATEGORIES) {
+    return { ...state, categories };
+  } else {
+    return state;
+  }
 }

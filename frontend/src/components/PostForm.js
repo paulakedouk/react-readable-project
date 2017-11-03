@@ -40,8 +40,10 @@ class PostForm extends Component {
 
   handleSubmit = event => {
     event.preventDefault();
+
+    const { error, ...post } = this.state;
+
     if (this.validate()) {
-      const { error, ...post } = this.state;
       if (this.props.edit) {
         this.props.editPostAPI(this.props.post.id, post);
         this.props.onClose();

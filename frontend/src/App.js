@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Route, Switch, withRouter } from 'react-router-dom';
+import { Route, Switch, withRouter, Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 import './App.css';
 
@@ -24,9 +24,9 @@ class App extends React.Component {
         <Switch>
           <Route exact path="/" component={PostList} />
           <Route exact path="/" component={PostForm} />
+          <Route exact path="/notfound" component={NotFound} />
+          <Route exact path="/:category/:postId" component={PostDetails} />
           <Route exact path="/:category" component={PostList} />
-          <Route path="/:category/:postId" component={PostDetails} />
-          <NotFound handler={NotFound} />
         </Switch>
       </div>
     );

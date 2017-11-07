@@ -202,6 +202,11 @@ span {
   font-weight: bold;
 }
 
+.not-found {
+  margin: 100px 0 auto;
+  text-align: center;
+}
+
 /* New Post */
 .backdrop .new-post-form > form {
   margin: 0;

@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import { Redirect } from 'react-router-dom';
 
 import { commentsAPI } from '../actions/comment';
 import { postAPI } from '../actions/post';
@@ -48,9 +49,7 @@ class PostDetails extends Component {
             )}
           </div>
         ) : (
-          <div>
-            <NotFound />
-          </div>
+          <Redirect to="/notfound" />
         )}
       </div>
     );

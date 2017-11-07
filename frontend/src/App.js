@@ -10,6 +10,7 @@ import { categoriesAPI } from './actions/category';
 import { postsAPI } from './actions/post';
 import PostForm from './components/PostForm';
 import PostDetails from './components/PostDetails';
+import NotFound from './components/NotFound';
 
 class App extends React.Component {
   componentDidMount() {
@@ -25,6 +26,7 @@ class App extends React.Component {
           <Route exact path="/" component={PostForm} />
           <Route exact path="/:category" component={PostList} />
           <Route path="/:category/:postId" component={PostDetails} />
+          <NotFound handler={NotFound} />
         </Switch>
       </div>
     );

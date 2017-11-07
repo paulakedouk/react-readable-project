@@ -6,7 +6,6 @@ import PropTypes from 'prop-types';
 import Modal from './Modal';
 import PostForm from './PostForm';
 import timeago from 'timeago.js';
-import NotFound from './NotFound';
 
 import * as actions from '../actions/post';
 

@@ -10,12 +10,6 @@ import CommentForm from './CommentForm';
 import NotFound from './NotFound';
 
 class PostDetails extends Component {
-  componentWillMount() {
-    if (typeof post === 'undefined') {
-      return <NotFound />;
-    }
-  }
-
   componentDidMount() {
     this.props.getPost(this.props.match.params.postId);
     this.props.getComments(this.props.match.params.postId);
@@ -36,11 +30,7 @@ class PostDetails extends Component {
 
     return (
       <div>
-        {typeof post.id === 'undefined' ? (
-          <div>
-            <NotFound />
-          </div>
-        ) : (
+        {typeof post !== 'undefined' ? (
           <div className="post-new">
             <div className="post-details">
               {post && <Post key={post.id} post={post} onDelete={this.handleDelete} />}
@@ -56,6 +46,10 @@ class PostDetails extends Component {
               </div>
             </div>
             )}
+          </div>
+        ) : (
+          <div>
+            <NotFound />
           </div>
         )}
       </div>

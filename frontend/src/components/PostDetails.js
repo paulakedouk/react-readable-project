@@ -31,7 +31,7 @@ class PostDetails extends Component {
 
     return (
       <div>
-        {typeof post !== 'undefined' ? (
+        {typeof post !== 0 ? (
           <div className="post-new">
             <div className="post-details">
               {post && <Post key={post.id} post={post} onDelete={this.handleDelete} />}

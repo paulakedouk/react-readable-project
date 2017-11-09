@@ -16,7 +16,7 @@ class MainPage extends Component {
             {categories.map(category => (
               <div className="categories-item" key={category.name}>
                 <div className="category">
-                  <Link to={category.path}>{category.name}</Link>
+                  <Link to={`/category/${category.path}`}>{category.name}</Link>
                 </div>
               </div>
             ))}

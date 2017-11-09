@@ -22,13 +22,7 @@ class PostDetails extends Component {
 
   render() {
     const { post, comments } = this.props;
-    // console.log(this.props);
-    const commentsMap = comments.map(comment => (
-      <div key={comment.id}>
-        <Comments comment={comment} />
-      </div>
-    ));
-
+    console.log(comments);
     return (
       <div>
         {typeof post !== 0 ? (
@@ -39,7 +33,11 @@ class PostDetails extends Component {
               <div className="post-details">
                 <div className="comments">
                   <h2>Comments</h2>
-                  {post ? commentsMap : <p>No comments yet.</p>}
+                  {comments.map(comment => (
+                    <div key={comment.id}>
+                      <Comments comment={comment} />
+                    </div>
+                  ))}
                 </div>
                 <div className="new-comment">
                   <CommentForm id={this.props.match.params.postId} />

@@ -73,7 +73,6 @@ const mapStateToProps = ({ post }) => {
       .filter(post => post);
     if (post.sortBy) {
       posts.sort(sort_by(post.sortBy.sort));
-      console.log(post.sortBy.sort);
     }
     return {
       posts

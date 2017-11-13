@@ -1,5 +1,5 @@
 import { headers, API } from '../utils/config';
-import { LOAD_COMMENTS, ADD_COMMENT, VOTE_COMMENT, EDIT_COMMENT, DELETE_COMMENT } from './types';
+import { LOAD_COMMENTS, ADD_COMMENT, VOTE_COMMENT, EDIT_COMMENT, DELETE_COMMENT, COMMENT_COUNT_UP } from './types';
 
 const loadComments = comments => ({
   type: LOAD_COMMENTS,
@@ -17,9 +17,15 @@ const addComment = comment => ({
   comment
 });
 
+const updateCommentCount = postId => ({
+  type: COMMENT_COUNT_UP,
+  postId
+});
+
 export const addCommentAPI = comment => dispatch => {
   const id = Math.random().toString();
   const timestamp = Date.now();
+  const postId = comment.id;
   comment = { ...comment, id, timestamp };
   fetch(`${API}/comments`, {
     method: 'POST',
@@ -30,7 +36,8 @@ export const addCommentAPI = comment => dispatch => {
     body: JSON.stringify(comment)
   })
     .then(res => res.json())
-    .then(comment => dispatch(addComment(comment)));
+    .then(comment => dispatch(addComment(comment)))
+    .then(dispatch(updateCommentCount(postId)));
 };
 
 const voteComment = ({ id, voteScore }) => ({

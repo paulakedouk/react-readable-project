@@ -12,20 +12,16 @@ export const commentsAPI = id => dispatch => {
     .then(comments => dispatch(loadComments(comments)));
 };
 
-const addComment = comment => ({
+const addComment = (comment, postId) => ({
   type: ADD_COMMENT,
-  comment
-});
-
-const updateCommentCount = postId => ({
-  type: COMMENT_COUNT_UP,
+  comment,
   postId
 });
 
 export const addCommentAPI = comment => dispatch => {
+  const postId = comment.id;
   const id = Math.random().toString();
   const timestamp = Date.now();
-  const postId = comment.id;
   comment = { ...comment, id, timestamp };
   fetch(`${API}/comments`, {
     method: 'POST',
@@ -36,8 +32,7 @@ export const addCommentAPI = comment => dispatch => {
     body: JSON.stringify(comment)
   })
     .then(res => res.json())
-    .then(comment => dispatch(addComment(comment)))
-    .then(dispatch(updateCommentCount(postId)));
+    .then(comment => dispatch(addComment(comment, postId)));
 };
 
 const voteComment = ({ id, voteScore }) => ({

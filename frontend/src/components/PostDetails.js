@@ -8,7 +8,6 @@ import { postAPI } from '../actions/post';
 import Post from './Post';
 import Comments from './Comments';
 import CommentForm from './CommentForm';
-import NotFound from './NotFound';
 
 class PostDetails extends Component {
   componentDidMount() {
@@ -22,7 +21,7 @@ class PostDetails extends Component {
 
   render() {
     const { post, comments } = this.props;
-    console.log(comments);
+
     return (
       <div>
         {typeof post !== 0 ? (

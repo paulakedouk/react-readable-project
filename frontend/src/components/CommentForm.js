@@ -49,7 +49,7 @@ class CommentForm extends Component {
         this.props.editCommentAPI(this.props.comment.id, comment);
         this.props.onClose();
       } else {
-        comment.id = this.props.id;
+        comment.parentId = this.props.parentId;
         this.props.addCommentAPI(comment);
       }
       this.handleReset();

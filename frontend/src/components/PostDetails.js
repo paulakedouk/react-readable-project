@@ -21,10 +21,21 @@ class PostDetails extends Component {
 
   render() {
     const { post, comments } = this.props;
+    // console.log(post);
+
+    function isEmpty(post) {
+      console.log(post);
+      for (var key in post) {
+        if (post.hasOwnProperty(key)) return false;
+      }
+      return true;
+    }
 
     return (
       <div>
-        {typeof post !== 0 ? (
+        {isEmpty(post) ? (
+          <Redirect to="/notfound" />
+        ) : (
           <div className="post-new">
             <div className="post-details">
               {post && <Post key={post.id} post={post} onDelete={this.handleDelete} />}
@@ -39,14 +50,12 @@ class PostDetails extends Component {
                   ))}
                 </div>
                 <div className="new-comment">
-                  <CommentForm id={this.props.match.params.postId} />
+                  <CommentForm parentId={this.props.match.params.postId} />
                 </div>
               </div>
             </div>
             )}
           </div>
-        ) : (
-          <Redirect to="/notfound" />
         )}
       </div>
     );

@@ -1,13 +1,13 @@
 import { headers, API } from '../utils/config';
-import { LOAD_COMMENTS, ADD_COMMENT, VOTE_COMMENT, EDIT_COMMENT, DELETE_COMMENT, COMMENT_COUNT_UP } from './types';
+import { LOAD_COMMENTS, ADD_COMMENT, VOTE_COMMENT, EDIT_COMMENT, DELETE_COMMENT } from './types';
 
 const loadComments = comments => ({
   type: LOAD_COMMENTS,
   comments
 });
 
-export const commentsAPI = id => dispatch => {
-  fetch(`${API}/posts/${id}/comments`, { headers })
+export const commentsAPI = parentId => dispatch => {
+  fetch(`${API}/posts/${parentId}/comments`, { headers })
     .then(res => res.json())
     .then(comments => dispatch(loadComments(comments)));
 };
@@ -19,7 +19,7 @@ const addComment = (comment, postId) => ({
 });
 
 export const addCommentAPI = comment => dispatch => {
-  const postId = comment.id;
+  const postId = comment.parentId;
   const id = Math.random().toString();
   const timestamp = Date.now();
   comment = { ...comment, id, timestamp };

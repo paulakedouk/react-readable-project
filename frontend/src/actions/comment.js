@@ -69,17 +69,18 @@ export const editCommentAPI = (id, comment) => dispatch => {
     .then(comment => dispatch(editComment(comment)));
 };
 
-const deleteComment = comment => ({
+const deleteComment = (comment, parentId) => ({
   type: DELETE_COMMENT,
-  comment
+  comment,
+  parentId
 });
 
-export const deleteCommentAPI = id => dispatch => {
+export const deleteCommentAPI = (id, parentId) => dispatch => {
   fetch(`${API}/comments/${id}`, {
     method: 'DELETE',
     headers,
     body: JSON.stringify(id)
   })
     .then(res => res.json())
-    .then(comment => dispatch(deleteComment(comment)));
+    .then(comment => dispatch(deleteComment(comment, parentId)));
 };

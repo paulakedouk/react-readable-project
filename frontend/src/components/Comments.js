@@ -44,7 +44,7 @@ class Comments extends Component {
             <i className="fa fa-trash" aria-hidden="true" onClick={this.handleDelete} />
           </div>
           <Modal show={this.state.edit} toggle={this.toggleEdit} onClose={this.toggleEdit}>
-            <CommentForm edit comment={this.props.comment} onClose={this.toggleEdit} />
+            <CommentForm edit comment={this.props.comment} onClose={this.toggleEdit} onDelete={this.handleDelete} />
           </Modal>
 
           <h3>{comment.author}</h3>

@@ -10,6 +10,12 @@ import Comments from './Comments';
 import CommentForm from './CommentForm';
 
 class PostDetails extends Component {
+  componentWillReceiveProps(nextProps) {
+    if (JSON.stringify(nextProps.post) === '{}') {
+      window.location.pathname = 'notfound';
+    }
+  }
+
   componentDidMount() {
     this.props.getPost(this.props.match.params.postId);
     this.props.getComments(this.props.match.params.postId);
@@ -21,41 +27,28 @@ class PostDetails extends Component {
 
   render() {
     const { post, comments } = this.props;
-    // console.log(post);
-
-    function isEmpty(post) {
-      console.log(post);
-      for (var key in post) {
-        if (post.hasOwnProperty(key)) return false;
-      }
-      return true;
-    }
 
     return (
       <div>
-        {isEmpty(post) ? (
-          <Redirect to="/notfound" />
-        ) : (
-          <div className="post-new">
+        <div className="post-new">
+          <div className="post-details">
+            {post && <Post key={post.id} post={post} onDelete={this.handleDelete} />}
             <div className="post-details">
-              {post && <Post key={post.id} post={post} onDelete={this.handleDelete} />}
-
-              <div className="post-details">
-                <div className="comments">
-                  <h2>Comments</h2>
-                  {comments.map(comment => (
-                    <div key={comment.id}>
-                      <Comments comment={comment} />
-                    </div>
-                  ))}
-                </div>
-                <div className="new-comment">
-                  <CommentForm parentId={this.props.match.params.postId} />
-                </div>
+              <div className="comments">
+                <h2>Comments</h2>
+                {comments.map(comment => (
+                  <div key={comment.id}>
+                    <Comments comment={comment} />
+                  </div>
+                ))}
+              </div>
+              <div className="new-comment">
+                <CommentForm parentId={this.props.match.params.postId} />
               </div>
             </div>
-            )}
           </div>
+          )}
+        </div>
         )}
       </div>
     );
@@ -67,8 +60,10 @@ PostDetails.propTypes = {
   getPost: PropTypes.func,
   getComments: PropTypes.func,
   match: PropTypes.object,
+  comments: PropTypes.array,
   history: PropTypes.object,
-  comments: PropTypes.array
+  match: PropTypes.object,
+  location: PropTypes.object
 };
 
 PostDetails.defaultProps = {

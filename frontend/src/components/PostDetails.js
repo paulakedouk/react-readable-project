@@ -1,21 +1,15 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { Redirect } from 'react-router-dom';
 
 import { commentsAPI } from '../actions/comment';
 import { postAPI } from '../actions/post';
 import Post from './Post';
 import Comments from './Comments';
 import CommentForm from './CommentForm';
+import NotFound from './NotFound';
 
 class PostDetails extends Component {
-  componentWillReceiveProps(nextProps) {
-    if (JSON.stringify(nextProps.post) === '{}') {
-      window.location.pathname = 'notfound';
-    }
-  }
-
   componentDidMount() {
     this.props.getPost(this.props.match.params.postId);
     this.props.getComments(this.props.match.params.postId);
@@ -25,14 +19,14 @@ class PostDetails extends Component {
     this.props.history.push('/');
   };
 
-  render() {
-    const { post, comments } = this.props;
-
-    return (
-      <div>
+  renderPostAndComments = (post, comments) => {
+    if (typeof post === 'undefined') {
+      return <div />;
+    } else if (!post.hasOwnProperty('error')) {
+      return (
         <div className="post-new">
           <div className="post-details">
-            {post && <Post key={post.id} post={post} onDelete={this.handleDelete} />}
+            <Post key={post.id} post={post} onDelete={this.handleDelete} />
             <div className="post-details">
               <div className="comments">
                 <h2>Comments</h2>
@@ -47,11 +41,16 @@ class PostDetails extends Component {
               </div>
             </div>
           </div>
-          )}
         </div>
-        )}
-      </div>
-    );
+      );
+    } else {
+      return <NotFound />;
+    }
+  };
+
+  render() {
+    const { post, comments } = this.props;
+    return this.renderPostAndComments(post, comments);
   }
 }
 
@@ -60,10 +59,8 @@ PostDetails.propTypes = {
   getPost: PropTypes.func,
   getComments: PropTypes.func,
   match: PropTypes.object,
-  comments: PropTypes.array,
   history: PropTypes.object,
-  match: PropTypes.object,
-  location: PropTypes.object
+  comments: PropTypes.array
 };
 
 PostDetails.defaultProps = {

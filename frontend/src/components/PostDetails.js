@@ -22,7 +22,7 @@ class PostDetails extends Component {
   renderPostAndComments = (post, comments) => {
     if (typeof post === 'undefined') {
       return <div />;
-    } else if (!post.hasOwnProperty('error')) {
+    } else if (!post.hasOwnProperty('error') && JSON.stringify(post) !== '{}') {
       return (
         <div className="post-new">
           <div className="post-details">

@@ -7,7 +7,7 @@ features of Redux with the declarative component model from React. When
 complete, you’ll be able to submit your own posts, comment on existing posts,
 and edit and delete posts and comments.
 
-<img src="frontend/publicreadable.gif" />
+<img src="frontend/public/readable.gif" />
 
 ## How to run
 

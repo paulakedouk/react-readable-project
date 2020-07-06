@@ -1,10 +1,9 @@
 # Readable: A Content and Comment Web App
 
-Leverage the strengths of Redux to build a “Readable” application where
-users can post text content and comment on each other's posts. You’ll build
-this dynamic application from scratch while combining the state management
+Leverage the strengths of Redux to build a "Readable" application where
+users can post text content and comment on each other's posts. This app was built from scratch while combining the state management
 features of Redux with the declarative component model from React. When
-complete, you’ll be able to submit your own posts, comment on existing posts,
+complete, users can submit your posts, comment on existing posts,
 and edit and delete posts and comments.
 
 <img src="frontend/public/readable.gif" />
